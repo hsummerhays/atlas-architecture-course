@@ -28,7 +28,9 @@ PAGE_WIDTH = Inches(8.5)
 PAGE_HEIGHT = Inches(11)
 MARGIN = Inches(1)
 HEADER_DISTANCE = Inches(0.492)
-FOOTER_DISTANCE = Inches(0.492)
+# Keep the footer closer to the page edge than the body margin. Although the
+# numeric distance is smaller, this increases clearance between body and footer.
+FOOTER_DISTANCE = Inches(0.35)
 CONTENT_WIDTH_DXA = 9360
 TABLE_INDENT_DXA = 120
 CELL_MARGIN_TOP_BOTTOM_DXA = 80
@@ -67,12 +69,28 @@ def configure_styles(doc: Document) -> None:
     normal.font.color.rgb = INK
     normal.paragraph_format.space_before = Pt(0)
     normal.paragraph_format.space_after = Pt(6)
-    normal.paragraph_format.line_spacing = 1.25
+    normal.paragraph_format.line_spacing = 1.2
+
+    for bullet_name in ("List Bullet", "List Bullet 2"):
+        bullet_style = styles[bullet_name]
+        bullet_style.font.name = FONT
+        bullet_style._element.rPr.rFonts.set(qn("w:ascii"), FONT)
+        bullet_style._element.rPr.rFonts.set(qn("w:hAnsi"), FONT)
+        bullet_style.font.size = Pt(11)
+        bullet_style.font.color.rgb = INK
+        bullet_style.paragraph_format.left_indent = Inches(0.375)
+        bullet_style.paragraph_format.first_line_indent = Inches(-0.1875)
+        bullet_style.paragraph_format.space_before = Pt(0)
+        bullet_style.paragraph_format.space_after = Pt(2)
+        bullet_style.paragraph_format.line_spacing = 1.1
 
     tokens = {
         "Heading 1": (16, BLUE, 18, 10),
         "Heading 2": (13, BLUE, 14, 7),
         "Heading 3": (12, NAVY, 10, 5),
+        "Heading 4": (11, NAVY, 8, 4),
+        "Heading 5": (10.5, NAVY, 7, 3),
+        "Heading 6": (10, NAVY, 6, 3),
     }
     for name, (size, color, before, after) in tokens.items():
         style = styles[name]
@@ -143,9 +161,6 @@ def create_numbering(doc: Document) -> int:
     numbering = doc.part.numbering_part.element
     existing = [int(node.get(qn("w:abstractNumId"))) for node in numbering.findall(qn("w:abstractNum"))]
     abstract_id = max(existing, default=-1) + 1
-    existing_nums = [int(node.get(qn("w:numId"))) for node in numbering.findall(qn("w:num"))]
-    num_id = max(existing_nums, default=0) + 1
-
     abstract = OxmlElement("w:abstractNum")
     abstract.set(qn("w:abstractNumId"), str(abstract_id))
     multi = OxmlElement("w:multiLevelType")
@@ -171,32 +186,18 @@ def create_numbering(doc: Document) -> int:
     indent.set(qn("w:left"), "540")
     indent.set(qn("w:hanging"), "270")
     spacing = OxmlElement("w:spacing")
-    spacing.set(qn("w:after"), "80")
-    spacing.set(qn("w:line"), "300")
+    spacing.set(qn("w:after"), "0")
+    spacing.set(qn("w:line"), "252")
     spacing.set(qn("w:lineRule"), "auto")
     p_pr.extend([tabs, indent, spacing])
     level.extend([start, num_fmt, lvl_text, lvl_jc, p_pr])
     abstract.append(level)
     numbering.append(abstract)
-
-    num = OxmlElement("w:num")
-    num.set(qn("w:numId"), str(num_id))
-    abstract_ref = OxmlElement("w:abstractNumId")
-    abstract_ref.set(qn("w:val"), str(abstract_id))
-    num.append(abstract_ref)
-    numbering.append(num)
-    return num_id
+    return abstract_id
 
 
-def apply_bullet(paragraph, num_id: int) -> None:
-    # A literal bullet in a hanging-indent paragraph is stable in Word and
-    # LibreOffice. OOXML numbering lost glyphs when lists crossed pages.
-    paragraph.paragraph_format.left_indent = Inches(0.375)
-    paragraph.paragraph_format.first_line_indent = Inches(-0.1875)
-    paragraph.paragraph_format.space_after = Pt(4)
-    paragraph.paragraph_format.line_spacing = 1.25
-    marker = paragraph.add_run("\u2022  ")
-    set_run_font(marker, size=11)
+def apply_bullet(paragraph, bullet_index: int) -> None:
+    paragraph.style = "List Bullet" if bullet_index % 2 == 0 else "List Bullet 2"
 
 
 INLINE_RE = re.compile(r"(`[^`]+`|\*\*[^*]+\*\*|\*[^*]+\*)")
@@ -370,8 +371,13 @@ def parse_table(lines: list[str], start: int) -> tuple[list[list[str]], int]:
 
 
 def add_heading(doc: Document, level: int, text: str):
-    paragraph = doc.add_paragraph(style=f"Heading {min(level, 3)}")
-    add_inline(paragraph, text, base_size={1: 16, 2: 13, 3: 12}.get(level, 11), base_color=BLUE if level < 3 else NAVY)
+    paragraph = doc.add_paragraph(style=f"Heading {min(level, 6)}")
+    add_inline(
+        paragraph,
+        text,
+        base_size={1: 16, 2: 13, 3: 12, 4: 11, 5: 10.5, 6: 10}.get(level, 10),
+        base_color=BLUE if level < 3 else NAVY,
+    )
     # Named pagination overrides for stable front-matter and teaching-brief
     # boundaries. Later chapters and appendices flow naturally so their Update
     # Notes do not become nearly empty continuation pages.
@@ -389,10 +395,10 @@ def build() -> None:
     section = doc.sections[0]
     configure_section(section)
     configure_footer(section)
-    bullet_num_id = create_numbering(doc)
     add_cover(doc)
     current_chapter = ""
     current_part = ""
+    bullet_index = 0
 
     # The first six Markdown lines are represented by the designed cover.
     index = next(i for i, line in enumerate(lines) if line.strip() == "## How to Use This Edition")
@@ -406,7 +412,7 @@ def build() -> None:
             rows, index = parse_table(lines, index)
             add_table(doc, rows)
             continue
-        heading = re.match(r"^(#{1,3})\s+(.+)$", line)
+        heading = re.match(r"^(#{1,6})\s+(.+)$", line)
         if heading:
             level = len(heading.group(1))
             heading_text = heading.group(2)
@@ -440,7 +446,8 @@ def build() -> None:
             continue
         if re.match(r"^-\s+", line):
             paragraph = doc.add_paragraph()
-            apply_bullet(paragraph, bullet_num_id)
+            apply_bullet(paragraph, bullet_index)
+            bullet_index += 1
             add_inline(paragraph, re.sub(r"^-\s+", "", line))
             index += 1
             continue
