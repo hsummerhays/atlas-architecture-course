@@ -105,13 +105,10 @@ def configure_styles(doc: Document) -> None:
         style.paragraph_format.space_before = Pt(before)
         style.paragraph_format.space_after = Pt(after)
         style.paragraph_format.line_spacing = 1.0
-        style.paragraph_format.keep_with_next = False
-        # LibreOffice interprets a present keepNext element as enabled even
-        # when OOXML stores w:val="0". Remove the element instead.
-        style_p_pr = style._element.get_or_add_pPr()
-        keep_next = style_p_pr.find(qn("w:keepNext"))
-        if keep_next is not None:
-            style_p_pr.remove(keep_next)
+        # A heading stays with the first block that gives it meaning. Chained
+        # headings therefore keep a chapter title with its subtitle and first
+        # substantive section without relying on chapter-specific rules.
+        style.paragraph_format.keep_with_next = True
         style.paragraph_format.keep_together = True
 
 
@@ -173,7 +170,7 @@ def create_numbering(doc: Document) -> int:
     num_fmt = OxmlElement("w:numFmt")
     num_fmt.set(qn("w:val"), "bullet")
     lvl_text = OxmlElement("w:lvlText")
-    lvl_text.set(qn("w:val"), "•")
+    lvl_text.set(qn("w:val"), "\u2022")
     lvl_jc = OxmlElement("w:lvlJc")
     lvl_jc.set(qn("w:val"), "left")
     p_pr = OxmlElement("w:pPr")
@@ -196,8 +193,30 @@ def create_numbering(doc: Document) -> int:
     return abstract_id
 
 
-def apply_bullet(paragraph, bullet_index: int) -> None:
-    paragraph.style = "List Bullet" if bullet_index % 2 == 0 else "List Bullet 2"
+def apply_bullet(doc: Document, paragraph, abstract_id: int) -> None:
+    """Apply a genuine Word bullet with an isolated numbering instance."""
+    numbering = doc.part.numbering_part.element
+    existing = [int(node.get(qn("w:numId"))) for node in numbering.findall(qn("w:num"))]
+    num_id = max(existing, default=0) + 1
+    num = OxmlElement("w:num")
+    num.set(qn("w:numId"), str(num_id))
+    abstract_ref = OxmlElement("w:abstractNumId")
+    abstract_ref.set(qn("w:val"), str(abstract_id))
+    num.append(abstract_ref)
+    numbering.append(num)
+
+    paragraph.style = "List Bullet"
+    paragraph.paragraph_format.left_indent = Inches(0.375)
+    paragraph.paragraph_format.first_line_indent = Inches(-0.1875)
+    paragraph.paragraph_format.space_before = Pt(0)
+    paragraph.paragraph_format.space_after = Pt(2)
+    paragraph.paragraph_format.line_spacing = 1.1
+    num_pr = paragraph._p.get_or_add_pPr().get_or_add_numPr()
+    ilvl = OxmlElement("w:ilvl")
+    ilvl.set(qn("w:val"), "0")
+    num_id_element = OxmlElement("w:numId")
+    num_id_element.set(qn("w:val"), str(num_id))
+    num_pr.extend([ilvl, num_id_element])
 
 
 INLINE_RE = re.compile(r"(`[^`]+`|\*\*[^*]+\*\*|\*[^*]+\*)")
@@ -311,7 +330,10 @@ def add_table(doc: Document, rows: list[list[str]]) -> None:
             paragraph.paragraph_format.space_before = Pt(0)
             paragraph.paragraph_format.space_after = Pt(0)
             paragraph.paragraph_format.line_spacing = 1.0
-            if row_index < len(normalized) - 1:
+            # Keep the table header with the first data row, but allow later
+            # rows to paginate independently. Row-level cantSplit prevents a
+            # practical-sized row from being divided across pages.
+            if row_index == 0:
                 paragraph.paragraph_format.keep_with_next = True
             add_inline(paragraph, value, base_size=10.5)
             if row_index == 0:
@@ -378,12 +400,10 @@ def add_heading(doc: Document, level: int, text: str):
         base_size={1: 16, 2: 13, 3: 12, 4: 11, 5: 10.5, 6: 10}.get(level, 10),
         base_color=BLUE if level < 3 else NAVY,
     )
-    # Named pagination overrides for stable front-matter and teaching-brief
-    # boundaries. Later chapters and appendices flow naturally so their Update
-    # Notes do not become nearly empty continuation pages.
-    if level == 1 and text.startswith("Chapter 1 "):
-        paragraph.paragraph_format.page_break_before = True
-    if level == 2 and text == "Course Map":
+    # Explicit page starts are reserved for editorially standalone sections.
+    if (level == 2 and text == "Course Map") or (
+        level == 1 and text.startswith("Appendix ")
+    ):
         paragraph.paragraph_format.page_break_before = True
     return paragraph
 
@@ -396,9 +416,7 @@ def build() -> None:
     configure_section(section)
     configure_footer(section)
     add_cover(doc)
-    current_chapter = ""
-    current_part = ""
-    bullet_index = 0
+    bullet_abstract_id = create_numbering(doc)
 
     # The first six Markdown lines are represented by the designed cover.
     index = next(i for i, line in enumerate(lines) if line.strip() == "## How to Use This Edition")
@@ -417,19 +435,6 @@ def build() -> None:
             level = len(heading.group(1))
             heading_text = heading.group(2)
             paragraph = add_heading(doc, level, heading_text)
-            if level == 1:
-                current_chapter = heading_text
-                current_part = ""
-            if level == 2:
-                current_part = heading_text
-            if current_chapter.startswith("Chapter 2 ") and heading_text == "Core Concepts":
-                paragraph.paragraph_format.page_break_before = True
-            if (
-                current_chapter.startswith("Chapter 8 ")
-                and current_part.startswith("Part 1 ")
-                and heading_text == "Core Concepts"
-            ):
-                paragraph.paragraph_format.page_break_before = True
             index += 1
             continue
         if line.startswith("> "):
@@ -446,8 +451,7 @@ def build() -> None:
             continue
         if re.match(r"^-\s+", line):
             paragraph = doc.add_paragraph()
-            apply_bullet(paragraph, bullet_index)
-            bullet_index += 1
+            apply_bullet(doc, paragraph, bullet_abstract_id)
             add_inline(paragraph, re.sub(r"^-\s+", "", line))
             index += 1
             continue
