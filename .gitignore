@@ -16,3 +16,6 @@ Desktop.ini
 *.njsproj
 *.sln
 *.sw?
+
+# Generated publishing QA output
+.build/
