@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-08-24 — Chapter 3 narrative and review updates
+ 
+- Added narrated teaching edition for [Chapter 3: Events and Reliability](course/chapter-03-events-and-reliability.md).
+- Updated course review edition content and synced editorial review status.
+- Updated documentation and README navigation links.
+
 ## 2026-07-29 — Review source reconciliation and publishing baseline
 
 - Established `review/Atlas_Enterprise_Platform_Course_Review_Edition.md` as the authoritative editorial review source.

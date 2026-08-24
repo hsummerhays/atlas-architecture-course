@@ -49,4 +49,4 @@ powershell -ExecutionPolicy Bypass -File tools/publish_review.ps1
 
 The command generates the root DOCX from the authoritative review Markdown, converts it directly with LibreOffice's console launcher (`soffice.com`), rasterizes every PDF page, and verifies the page sequence and image output. Generated QA artifacts are written beneath `.build/review/` and are ignored by Git. A successful machine check does not replace the required visual inspection of every page.
 
-The reusable, narrative-free scaffold for the next teaching chapter is [the Chapter 3 template](course/chapter-03-template.md). Validate any template changes against Chapters 1 and 2 before drafting Chapter 3 prose.
+The narrated teaching edition includes [Chapter 1](course/chapter-01-business-problem.md), [Chapter 2](course/chapter-02-following-a-shipment.md), and [Chapter 3](course/chapter-03-events-and-reliability.md). The reusable template is available at [Chapter 3 template](course/chapter-03-template.md).
