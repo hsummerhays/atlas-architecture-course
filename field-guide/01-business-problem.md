@@ -43,7 +43,7 @@
 
 ## 4. The Atlas Scenario
 - **Business Context:** Enterprise shippers operate heterogeneous client applications (CRMs, warehouse management systems, customer portals).
-- **Integration Pressure:** External carriers vary wildly: FedEx uses REST/OAuth with imperial units; UPS uses SOAP/XML with metric units; regional couriers use daytime-only batch webhooks.
+- **Integration Pressure (Illustrative):** External carriers vary in protocol, units, authentication, and dispatch timing (e.g., REST vs. SOAP/GraphQL, imperial vs. metric units, synchronous vs. asynchronous callback webhooks).
 - **The Architectural Hazard:** Direct integration forces every client app to learn carrier-specific authentication, schema quirks, and error semantics, resulting in duplicate translation logic and domain pollution.
 
 ---
@@ -51,7 +51,7 @@
 ## 5. Diagram & Boundary Map
 - **Diagram:** [Atlas System Context](../diagrams/atlas-system-context.svg)
 - **Atlas Owns:** `ShipmentId`, `OriginAddress`, `DestinationAddress`, `Weight` (canonical grams/kg), `ServiceLevel` (Standard/Express), `Status` (`PENDING`, `BOOKED`, `FAILED`).
-- **Adapters Own:** Token acquisition, SOAP envelope generation, unit conversions (inches to cm), provider HTTP timeouts, and carrier error code translation.
+- **Adapters Own:** Token acquisition, payload envelope generation, unit conversions, provider HTTP timeouts, and carrier error code translation.
 
 ---
 
@@ -61,7 +61,7 @@
 |---|---|
 | **Client Stability:** Clients integrate once against Atlas's stable API contract. | **Mapping Overhead:** Every carrier requires custom mapping classes and contract tests. |
 | **Blast Radius Containment:** Carrier schema or API changes only impact that single adapter. | **Lowest-Common-Denominator Risk:** Specialized carrier features (e.g., custom hazardous cargo flags) don't automatically exist in the canonical model. |
-| **Testability:** Core domain logic can be tested 100% in memory using mock carrier ports. | **Translation Latency:** Negligible CPU cost for object mapping. |
+| **Isolated Testability:** Core domain logic can be tested in isolation using test doubles for carrier ports. | **Model Impedance:** Some provider concepts won't map cleanly to the canonical model and require deliberate capability/extension handling. |
 
 ---
 
@@ -81,7 +81,7 @@
 2. *Universal Dynamic Mapping Engine:* Rejected under YAGNI/Rule of Three. Dynamic reflection/JSON-path mapping adds runtime fragility before carrier volume justifies the complexity.
 
 ### Revisit Trigger
-"If 95% of business volume consolidates onto a single logistics provider whose proprietary protocol becomes the global industry standard."
+"Revisit if provider-specific capabilities become the dominant source of product differentiation and the canonical abstraction begins obstructing rather than isolating necessary variation."
 
 ---
 
@@ -93,7 +93,11 @@
 ### Q2: "A new carrier supports a specialized temperature-control flag that no other carrier has. How do you handle it?"
 - **Strong Answer:** "First, ask if temperature control is a core Atlas business promise. If yes, add it deliberately to the canonical model as an optional capability with feature-flagged adapter support. If it's a proprietary one-off not in our SLA, leave it at the adapter boundary or pass it via structured extension metadata without polluting core booking logic."
 
-### 🚩 Red Flags to Avoid in Interviews
+### 🚩 Common Interview Pitfalls
 - ❌ **Starting with Frameworks:** Beginning your answer with "I'd use Spring Boot with Kafka and PostgreSQL..." before defining what a shipment is and who the actors are.
 - ❌ **False Uniformity:** Claiming that adapters make all carriers identical. (Carriers have real differences in failure semantics and capabilities; good architecture makes them manageable, not invisible).
 - ❌ **Speculative Generality:** Designing a dynamic plugin engine or bytecode transformer on Day 1 when you only support two carriers.
+
+---
+
+**Deep dive:** [Chapter 1 — The Business Problem](../course/chapter-01-business-problem.md) · [ADR-0001](../adr-examples/ADR-0001-canonical-shipment-model.md) · [Exercise 1](../exercises/exercise-01-find-architecture.md)

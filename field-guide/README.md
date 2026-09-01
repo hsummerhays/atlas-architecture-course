@@ -19,7 +19,7 @@ Every guide follows an identical 8-part quick-retrieval layout:
 5. **Diagram & Boundary Map:** Visual link and explicit ownership boundaries.
 6. **The Central Tradeoff:** Explicit *"What We Buy vs. What We Pay"* balance.
 7. **2-Minute Architectural Defense:** Structured walkthrough (Context ➔ Decision ➔ Tradeoffs ➔ Alternatives Rejected ➔ Revisit Trigger).
-8. **Interview Questions, Follow-ups & Red Flags:** Staff-level probing questions, model answers, and fatal interview pitfalls.
+8. **Interview Questions, Follow-ups & Red Flags:** Staff-level probing questions, model answers, and common interview pitfalls.
 
 ## Field Guide Directory
 
