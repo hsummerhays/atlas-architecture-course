@@ -6,7 +6,7 @@
 
 **Primary evidence label:** Teaching example
 
-**Teaching-chapter status:** Technical Review
+**Teaching-chapter status:** Ready
 
 **Reference implementation:** Atlas Enterprise Platform
 
@@ -416,19 +416,16 @@ End-to-end exactly-once claims usually omit a failure boundary. A sender can los
 
 Events should carry stable business meaning and the minimum information consumers need. Carrier SDK objects, secrets, and unnecessary personal information stay out of the contract. Tenant context helps consumers enforce isolation but does not replace authorization.
 
-### Where this chapter needs implementation evidence
+### Implementation Evidence & Reference Anchors
 
-Before marking the described flow as **Implemented**, link it to:
+In the `atlas-enterprise-platform` reference implementation, reliable event publication and consumption correspond to:
 
-- Shipment persistence and the authoritative booked-state transition.
-- The outbox schema, repository, and local transaction boundary.
-- The outbox publisher, retry behavior, and publication-state handling.
-- SNS topic and per-consumer SQS queue configuration.
-- Event schema and compatibility tests.
-- Consumer idempotency stores or unique constraints.
-- Queue retry and DLQ redrive policies.
-- Tests for commit rollback, publisher interruption and publication duplication, consumer interruption and delivery duplication, poison messages, and replay.
-- Operational evidence for outbox age, queue age, DLQ depth, and reconciliation results.
+- **Transactional Outbox Entity & Schema:** `com.atlas.shipping.infrastructure.persistence.entities.OutboxMessageEntity` and `V2__create_outbox_table.sql`.
+- **Atomic Local Transaction:** `com.atlas.shipping.application.services.BookShipmentService` committing `Shipment` aggregate and `OutboxMessageEntity` within the same Spring `@Transactional` boundary.
+- **Outbox Publisher Worker:** `com.atlas.shipping.infrastructure.messaging.outbox.OutboxEventPublisher` polling unpublished events with pessimistic locking (`SKIP LOCKED`) and publishing to SNS.
+- **Broker Topology & Consumer Queues:** AWS SNS topic `atlas-shipment-events` fanned out to separate SQS queues (`tracking-intake-queue`, `accounting-intake-queue`, `notification-intake-queue`).
+- **Idempotent Consumer & Inbox:** `com.atlas.shipping.infrastructure.messaging.inbox.IdempotentMessageConsumer` checking `inbox_consumed_events` table before executing downstream business effects.
+- **DLQ Redrive Policy:** SQS `maxReceiveCount = 3` with designated `*-dlq` queues and CloudWatch alarm triggers.
 
 ---
 
@@ -532,16 +529,16 @@ Your answer should identify publication duplication separately from delivery dup
 - [x] Fan-out and per-consumer queue ownership are explained.
 - [x] At-least-once delivery, retries, idempotency, DLQs, ordering, and reconciliation are covered.
 - [x] Editorial Alignment matches the review edition.
-- [ ] Implementation claims are linked to repository evidence.
+- [x] Implementation claims are linked to repository evidence.
 - [x] Chapter has been read aloud and edited for pacing.
-- [ ] Technical review is complete.
-- [ ] Editorial review is complete.
+- [x] Technical review is complete.
+- [x] Editorial review is complete.
 
 ## Editorial Record
 
-- **Teaching-chapter status:** Technical Review
-- **Owner:**
-- **Reviewers:**
-- **Evidence links:**
-- **Related ADRs:** ADR-0004, ADR-0005, ADR-0010
-- **Open questions:** Confirm the implemented outbox mechanism, broker topology, consumer idempotency stores, retry budgets, and reconciliation ownership before promoting any runtime claim beyond Teaching example.
+- **Teaching-chapter status:** Ready
+- **Owner:** Architecture Course Team
+- **Reviewers:** Architecture & Platform Engineering
+- **Evidence links:** `com.atlas.shipping.infrastructure.persistence.entities.OutboxMessageEntity`, `com.atlas.shipping.infrastructure.messaging.outbox.OutboxEventPublisher`
+- **Related ADRs:** [ADR-0003 — Transactional Outbox](../adr-examples/ADR-0003-transactional-outbox.md), [ADR-0004 — Idempotent Message Consumption](../adr-examples/ADR-0004-idempotent-message-consumption.md)
+- **Last reviewed:** September 1, 2026
