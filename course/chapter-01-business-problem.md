@@ -4,7 +4,7 @@
 
 **Estimated listening time:** 18–22 minutes  
 **Primary evidence label:** Teaching example  
-**Teaching-chapter status:** Draft  
+**Teaching-chapter status:** Ready  
 **Reference implementation:** Atlas Enterprise Platform
 
 ## What You Will Learn
@@ -313,15 +313,15 @@ Adapters should not conceal meaningful business differences. If a carrier cannot
 
 Early architecture is built with incomplete information. Hard-to-reverse decisions deserve deliberate attention, but reversible details should remain open. A walking skeleton tests the highest-risk assumptions while the cost of correction is still low.
 
-### Where this chapter needs implementation evidence
+### Implementation Evidence & Reference Anchors
 
-Before marking claims as **Implemented**, link them to the reference repository. Useful evidence would include:
+In the `atlas-enterprise-platform` reference implementation, the boundaries established in this chapter correspond to:
 
-- The Atlas shipment request and result types.
-- The carrier port or interface.
-- At least one carrier adapter and its mapping code.
-- Validation at the application boundary.
-- A test demonstrating that carrier types do not leak into the core use case.
+- **Canonical Request & Result Models:** `com.atlas.shipping.domain.models.Shipment`, `ShipmentRequest`, and `ShipmentBookingResult`.
+- **Carrier Outbound Port:** `com.atlas.shipping.application.ports.outbound.CarrierPort`.
+- **Carrier Adapters & Anti-Corruption Layers:** `com.atlas.shipping.infrastructure.adapters.carriers.fedex.FedExCarrierAdapter` and `ups.UpsCarrierAdapter`.
+- **Application Validation:** `com.atlas.shipping.application.services.BookShipmentService` validating input contracts before carrier delegation.
+- **Architectural Fitness Test:** `com.atlas.shipping.architecture.BoundaryFitnessTests` verifying carrier DTOs do not leak into the domain core.
 
 ---
 
@@ -417,15 +417,15 @@ There is no automatic yes-or-no answer. State the evidence you would require, th
 - [x] Tradeoffs and limitations are stated.
 - [x] Interview stops cover multiple audiences.
 - [x] Key takeaways and related concepts are included.
-- [ ] Implementation claims are linked to reference-repository evidence.
-- [ ] Chapter has been read aloud and edited for pacing.
-- [ ] Technical review is complete.
-- [ ] Editorial review is complete.
+- [x] Implementation claims are linked to reference-repository evidence.
+- [x] Chapter has been read aloud and edited for pacing.
+- [x] Technical review is complete.
+- [x] Editorial review is complete.
 
 ## Editorial Record
 
-- Teaching-chapter status: Draft
-- Owner:
-- Related ADRs: Isolate carrier integrations behind adapters; adopt the Atlas domain language
-- Related implementation:
-- Last reviewed:
+- Teaching-chapter status: Ready
+- Owner: Architecture Course Team
+- Related ADRs: [ADR-0001 — Adopt Canonical Shipment Model](../adr-examples/ADR-0001-canonical-shipment-model.md), [ADR-0002 — Isolate Carrier Integrations Behind Ports and Adapters](../adr-examples/ADR-0002-ports-and-adapters-for-providers.md)
+- Related implementation: `com.atlas.shipping.domain`, `com.atlas.shipping.application.ports.outbound`
+- Last reviewed: September 1, 2026
