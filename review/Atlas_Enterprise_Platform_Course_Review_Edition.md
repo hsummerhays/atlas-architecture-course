@@ -45,6 +45,7 @@ Use **canonical shipment model** as the preferred Atlas-specific term. Use **can
 - **Chapter 7 — Observability: Understanding a Running System** — Making Atlas Explain Its Behavior
 - **Chapter 8 — Evolutionary Architecture** — Fitness Functions, Safe Evolution, and Architecture Ownership
 - **Chapter 9 — The Architect’s Method** — From Problem and Blueprint to Practice and Communication
+- **[Course Glossary](../course/glossary.md)** — Architectural terms, patterns, and Atlas context.
 
 ---
 # Chapter 1 — The Business Problem

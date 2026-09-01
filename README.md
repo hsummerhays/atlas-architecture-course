@@ -59,3 +59,6 @@ The narrated teaching edition includes:
 - [Chapter 7 — Observability: Understanding a Running System](course/chapter-07-observability-understanding-a-running-system.md)
 - [Chapter 8 — Evolutionary Architecture](course/chapter-08-evolutionary-architecture.md)
 - [Chapter 9 — The Architect's Method](course/chapter-09-the-architects-method.md)
+
+Course Reference:
+- [Course Glossary](course/glossary.md) — Comprehensive reference of core architectural concepts and Atlas context.
