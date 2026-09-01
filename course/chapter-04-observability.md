@@ -6,7 +6,7 @@
 
 **Primary evidence label:** Teaching example
 
-**Teaching-chapter status:** Draft
+**Teaching-chapter status:** Round 2 reconciled draft
 
 **Reference implementation:** Atlas Enterprise Platform
 
@@ -395,6 +395,73 @@ But if the oldest row is forty minutes old, Atlas has a convergence problem.
 
 The metric becomes meaningful when it represents operational pressure.
 
+
+### Use consistent operational lenses
+
+Atlas does not need a different monitoring philosophy for every component. A few reusable lenses help engineers ask consistent questions.
+
+For request-oriented services, the **four golden signals** are a useful starting point:
+
+```text
+Latency
+Traffic
+Errors
+Saturation
+```
+
+For an HTTP API:
+
+```text
+Latency    → request duration
+Traffic    → requests per second
+Errors     → unsuccessful requests
+Saturation → workers, connections, CPU, or queue pressure
+```
+
+For a message consumer:
+
+```text
+Latency    → processing duration
+Traffic    → messages per second
+Errors     → failed messages
+Saturation → backlog, lag, or exhausted consumer capacity
+```
+
+Two related models are useful as well.
+
+**RED** focuses on request-driven services:
+
+```text
+Rate
+Errors
+Duration
+```
+
+**USE** focuses on resources:
+
+```text
+Utilization
+Saturation
+Errors
+```
+
+A database connection pool, for example, can be examined through USE:
+
+```text
+Utilization:
+How many connections are active?
+
+Saturation:
+How many requests are waiting?
+
+Errors:
+How many connection attempts fail?
+```
+
+These are not competing standards. They are thinking tools.
+
+The point is to prevent teams from monitoring only the easiest number to graph while missing the signal that represents customer impact or capacity pressure.
+
 ### Metric labels need boundaries
 
 Metrics often contain labels.
@@ -511,6 +578,51 @@ A sampled trace may not exist for every request.
 And an asynchronous event may begin a new execution context long after the original HTTP request has completed.
 
 That is why correlation context and business identifiers still matter.
+
+
+### Sampling preserves useful evidence economically
+
+Detailed traces can become expensive at high traffic volumes.
+
+Atlas therefore should not assume that every normal request must be retained forever.
+
+A simple strategy might preserve:
+
+```text
+100% of errors
+100% of unusually slow traces
+a smaller sample of ordinary successful traffic
+```
+
+There are two broad approaches.
+
+**Head-based sampling** decides near the beginning of the operation whether the trace will be retained.
+
+```text
+Trace begins
+    ↓
+Sample?
+  ┌─┴─┐
+ Yes  No
+```
+
+**Tail-based sampling** can make the decision after observing the completed trace.
+
+```text
+Trace completes
+      ↓
+Did it fail?
+Was it unusually slow?
+Was it operationally interesting?
+      ↓
+Keep or discard
+```
+
+Tail-based sampling is particularly useful because rare failures and slow requests can be retained even when most routine traffic is discarded.
+
+Sampling reinforces an important principle:
+
+> The goal is not maximum telemetry. The goal is sufficient evidence to understand the system economically.
 
 ### Observability crosses asynchronous boundaries
 
@@ -909,6 +1021,49 @@ This is especially important when deployment frequency increases.
 
 Fast delivery without release observability turns incident diagnosis into archaeology.
 
+
+### Standard instrumentation creates a useful boundary
+
+Atlas may run in different environments over its lifetime.
+
+Cloud platforms and observability vendors provide valuable capabilities, but application code should not need to understand every destination to emit useful telemetry.
+
+A standardized instrumentation model such as OpenTelemetry creates a useful boundary:
+
+```text
+Atlas services
+      ↓
+OpenTelemetry instrumentation
+      ↓
+Collector / exporter
+      ↓
+Observability backend
+```
+
+The backend might be associated with Azure, AWS, GCP, Kubernetes tooling, or another telemetry platform.
+
+The product names differ.
+
+The architectural questions remain stable:
+
+```text
+Can we see failures?
+
+Can we measure latency?
+
+Can we follow distributed work?
+
+Can we identify queue backlog?
+
+Can we distinguish our failure
+from a dependency failure?
+
+Can we correlate behavior
+with a deployment?
+```
+
+This is the same portability principle Atlas applies elsewhere: isolate infrastructure-specific integration where doing so preserves meaningful freedom, but do not pretend every platform exposes identical capabilities.
+
 ### Observability should preserve architecture boundaries
 
 Telemetry itself can damage architecture if we are careless.
@@ -1022,6 +1177,85 @@ It tells us where ownership lies.
 It gives us a likely recovery path.
 
 That is what observability should enable.
+
+
+### Resilience mechanisms must themselves be observable
+
+Chapter 7 will examine failure and resilience in depth. From an observability perspective, one principle matters immediately:
+
+> A resilience mechanism that changes system behavior should emit evidence about that behavior.
+
+Retries can hide a deteriorating dependency.
+
+A user-visible success rate may remain excellent while first-attempt success collapses.
+
+Useful retry evidence includes:
+
+```text
+dependency
+operation
+attempt count
+original failure class
+backoff duration
+retry exhausted
+```
+
+Circuit breakers are state machines, so their state transitions should be visible:
+
+```text
+circuit_opened
+circuit_half_open
+circuit_closed
+```
+
+Timeouts should remain distinguishable from generic failures:
+
+```text
+dependency
+operation
+configured timeout
+elapsed duration
+attempt number
+```
+
+Rate limiting also needs explicit evidence.
+
+For inbound traffic, operators may need:
+
+```text
+tenant or bounded tenant group
+endpoint
+requests rejected
+configured limit
+```
+
+For outbound traffic:
+
+```text
+provider
+configured limit
+current utilization
+throttled requests
+provider 429 responses
+```
+
+Queues need more than depth:
+
+```text
+arrival rate
+processing rate
+queue depth
+oldest message age
+consumer lag
+retry count
+dead-letter count
+```
+
+A queue depth of 10,000 may be harmless if Atlas processes 50,000 messages per second.
+
+A queue depth of 500 with an oldest-message age of four hours may represent a serious incident.
+
+Observability gives resilience mechanisms operational meaning.
 
 ### Runbooks turn evidence into action
 
@@ -1143,6 +1377,61 @@ We redact sensitive values.
 And we continually ask:
 
 > Does this evidence help us answer a question we actually need to answer?
+
+
+### A production component has an operational interface
+
+Engineers naturally think about functional interfaces.
+
+For example:
+
+```java
+RateResponse getRates(RateRequest request);
+```
+
+A production-ready component also has an operational interface.
+
+It should provide evidence that helps answer:
+
+```text
+How often am I called?
+
+How long do I take?
+
+How often do I fail?
+
+Why do I fail?
+
+Which dependencies do I use?
+
+Am I approaching capacity?
+
+Which release am I running?
+
+Which business operation am I performing?
+```
+
+This does not mean instrumenting every method.
+
+The most valuable telemetry usually appears at architectural boundaries:
+
+```text
+HTTP request enters a service
+service calls a database
+service calls an external provider
+message is published
+message is consumed
+authentication occurs
+cache is accessed
+circuit state changes
+business transaction completes
+```
+
+Those are the places where latency accumulates, ownership changes, failures propagate, and state changes become meaningful.
+
+A well-designed service does more than perform work.
+
+It explains its behavior while performing that work.
 
 ### The observability test
 
@@ -1505,7 +1794,7 @@ Your answer should distinguish transport success from business convergence.
 
 ## Editorial Record
 
-- **Teaching-chapter status:** Draft
+- **Teaching-chapter status:** Round 2 reconciled draft
 - **Owner:**
 - **Reviewers:**
 - **Evidence links:**
