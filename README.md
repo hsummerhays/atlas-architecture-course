@@ -8,7 +8,7 @@ This repository contains the teaching, architecture, and portfolio artifacts for
 
 The course is a narrated tour of the system, not a reading of the reference implementation's documentation. Begin with [Chapter 1](course/chapter-01-business-problem.md), which establishes the voice and lesson format used by the teaching edition.
 
-The authoritative editorial control copy is [the review edition](review/Atlas_Enterprise_Platform_Course_Review_Edition.md). Review decisions, terminology, status, ADR alignment, and current/target-state descriptions are maintained there before they are expanded into narrated chapters.
+The authoritative editorial control copy is [the review edition](review/Atlas_Enterprise_Platform_Course_Review_Edition.md). Review decisions, terminology, status, ADR alignment, and current/target-state descriptions are governed there; if an architectural claim in a teaching chapter conflicts with the review edition, the review edition controls.
 
 Each teaching chapter combines:
 
