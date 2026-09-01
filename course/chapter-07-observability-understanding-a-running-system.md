@@ -4,7 +4,7 @@
 
 **Estimated listening time:** 24–28 minutes  
 **Primary evidence label:** Teaching example  
-**Teaching-chapter status:** Draft  
+**Teaching-chapter status:** Ready  
 **Reference implementation:** Atlas Enterprise Platform
 
 ## What You Will Learn
