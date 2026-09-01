@@ -269,7 +269,7 @@ Good architecture does not erase those boundaries. It makes them visible and man
 
 ![Atlas System Context](../diagrams/atlas-system-context.svg)
 
-*(Related Decision: [ADR-0001 — Adopt Canonical Shipment Model](../adr-examples/ADR-0001-canonical-shipment-model.md))*
+*(Related Decision: [ADR-0001 — Adopt Canonical Shipment Model](../adr-examples/ADR-0001-canonical-shipment-model.md) | Hands-on Practice: [Exercise 1 — Find the Architecture in the Business Problem](../exercises/exercise-01-find-architecture.md))*
 
 ### What's Next?
 

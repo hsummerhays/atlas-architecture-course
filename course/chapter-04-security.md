@@ -1453,7 +1453,7 @@ And when something is compromised, the architecture limits what that compromise 
 
 ![Security Architecture & Trust Boundaries](../diagrams/security-trust-boundaries.svg)
 
-*(Related Decision: [ADR-0005 — Managed Identity, Resource Scoping, and Automation Governance](../adr-examples/ADR-0005-managed-identity-and-secret-handling.md))*
+*(Related Decision: [ADR-0005 — Managed Identity, Resource Scoping, and Automation Governance](../adr-examples/ADR-0005-managed-identity-and-secret-handling.md) | Hands-on Practice: [Exercise 4 — Threat-Model Atlas](../exercises/exercise-04-threat-model-atlas.md))*
 
 ### What's Next?
 

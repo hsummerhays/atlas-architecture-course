@@ -388,7 +388,7 @@ An Atlas response returns to the client
 
 ![Shipment Request Flow](../diagrams/shipment-request-flow.svg)
 
-*(Related Decision: [ADR-0002 — Isolate Carrier Integrations Behind Ports and Adapters](../adr-examples/ADR-0002-ports-and-adapters-for-providers.md))*
+*(Related Decision: [ADR-0002 — Isolate Carrier Integrations Behind Ports and Adapters](../adr-examples/ADR-0002-ports-and-adapters-for-providers.md) | Hands-on Practice: [Exercise 2 — Trace a Shipment](../exercises/exercise-02-trace-a-shipment.md))*
 
 ### What's Next?
 

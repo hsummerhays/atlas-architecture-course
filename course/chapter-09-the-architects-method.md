@@ -2252,4 +2252,6 @@ Architecture exists to make important decisions explicit so that a system can se
 
 ![The Architect's Method Process Flow](../diagrams/architects-method.svg)
 
+*(Hands-on Practice: [Exercise 9 — Architect a New Capability (Capstone)](../exercises/exercise-09-architect-a-new-capability.md))*
+
 That is the architect's method.

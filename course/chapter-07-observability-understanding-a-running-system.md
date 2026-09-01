@@ -1820,7 +1820,7 @@ And as Atlas grows across services, queues, databases, providers, containers, te
 
 ![Observability Context & Trace Propagation](../diagrams/observability-correlation.svg)
 
-*(Related Decision: [ADR-0007 — OpenTelemetry Instrumentation and Context Propagation Boundary](../adr-examples/ADR-0007-opentelemetry-instrumentation-boundary.md))*
+*(Related Decision: [ADR-0007 — OpenTelemetry Instrumentation and Context Propagation Boundary](../adr-examples/ADR-0007-opentelemetry-instrumentation-boundary.md) | Hands-on Practice: [Exercise 7 — Diagnose the Incident](../exercises/exercise-07-diagnose-the-incident.md))*
 
 ### What's Next?
 

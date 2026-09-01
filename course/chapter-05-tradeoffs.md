@@ -818,6 +818,8 @@ That is the discipline behind architectural tradeoffs—and one of the foundatio
 
 ![Architectural Tradeoff Map](../diagrams/architecture-tradeoff-map.svg)
 
+*(Hands-on Practice: [Exercise 5 — Make the Tradeoff](../exercises/exercise-05-make-the-tradeoff.md))*
+
 ### What's Next?
 
 Understanding tradeoffs between consistency, availability, and simplicity leads directly to the ultimate stress test of any design: how the system behaves when components, networks, and providers inevitably fail.

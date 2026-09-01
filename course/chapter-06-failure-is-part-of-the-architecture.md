@@ -1386,7 +1386,7 @@ And resilience is architecture.
 
 ![Distributed Resilience & Fault Containment Flow](../diagrams/resilience-flow.svg)
 
-*(Related Decision: [ADR-0006 — Explicit Distributed Resilience Policies](../adr-examples/ADR-0006-explicit-resilience-policies.md))*
+*(Related Decision: [ADR-0006 — Explicit Distributed Resilience Policies](../adr-examples/ADR-0006-explicit-resilience-policies.md) | Hands-on Practice: [Exercise 6 — Design for Failure](../exercises/exercise-06-design-for-failure.md))*
 
 ### What's Next?
 

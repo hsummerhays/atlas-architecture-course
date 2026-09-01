@@ -1831,7 +1831,7 @@ That is evolutionary architecture.
 
 ![Evolutionary Architecture Feedback Loop](../diagrams/evolutionary-architecture-loop.svg)
 
-*(Related Decision: [ADR-0008 — Automated Architectural Fitness Functions in CI/CD](../adr-examples/ADR-0008-architectural-fitness-functions.md))*
+*(Related Decision: [ADR-0008 — Automated Architectural Fitness Functions in CI/CD](../adr-examples/ADR-0008-architectural-fitness-functions.md) | Hands-on Practice: [Exercise 8 — Evolve Atlas Safely](../exercises/exercise-08-evolve-atlas-safely.md))*
 
 ### What's Next?
 
