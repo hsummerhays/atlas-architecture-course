@@ -1,4 +1,4 @@
-# Chapter 7 — Failure Is Part of the Architecture
+# Chapter 6 — Failure Is Part of the Architecture
 
 One of the easiest mistakes in software architecture is designing primarily for the successful path.
 
@@ -28,7 +28,7 @@ Atlas treats failure handling as part of the architecture rather than something 
 
 ---
 
-## 7.1 From Error Handling to Resilience
+## 6.1 From Error Handling to Resilience
 
 Traditional application development often treats failure locally.
 
@@ -106,7 +106,7 @@ That distinction is the beginning of resilience engineering.
 
 ---
 
-## 7.2 Timeouts Are Architectural Boundaries
+## 6.2 Timeouts Are Architectural Boundaries
 
 Every network operation should have a finite expectation for how long it is allowed to consume resources.
 
@@ -189,7 +189,7 @@ The important concept is that timeout configuration expresses an architectural d
 
 ---
 
-## 7.3 Retries Are Not Automatically Safe
+## 6.3 Retries Are Not Automatically Safe
 
 When something fails temporarily, retrying seems obvious.
 
@@ -245,7 +245,7 @@ A resilience mechanism has become a failure amplifier.
 
 ---
 
-## 7.4 Backoff and Jitter
+## 6.4 Backoff and Jitter
 
 Retries should generally become less aggressive as failures continue.
 
@@ -322,7 +322,7 @@ Is failure transient?
 
 ---
 
-## 7.5 Retry Only What Can Succeed
+## 6.5 Retry Only What Can Succeed
 
 Not every failure deserves another attempt.
 
@@ -373,7 +373,7 @@ The policy should understand the semantics of the dependency rather than treatin
 
 ---
 
-## 7.6 Idempotency Makes Retries Safer
+## 6.6 Idempotency Makes Retries Safer
 
 Retries become especially dangerous when operations modify state.
 
@@ -434,7 +434,7 @@ Retries without idempotency can turn transient infrastructure failures into dupl
 
 ---
 
-## 7.7 Circuit Breakers Protect the System
+## 6.7 Circuit Breakers Protect the System
 
 Retries assume a dependency may recover soon.
 
@@ -493,7 +493,7 @@ Second, the failing dependency gets time to recover without being continuously h
 
 ---
 
-## 7.8 Bulkheads Limit the Blast Radius
+## 6.8 Bulkheads Limit the Blast Radius
 
 Circuit breakers protect Atlas from unhealthy dependencies.
 
@@ -560,7 +560,7 @@ The principle remains the same:
 
 ---
 
-## 7.9 Rate Limiting Protects Both Sides
+## 6.9 Rate Limiting Protects Both Sides
 
 Atlas may need protection from excessive inbound traffic.
 
@@ -625,7 +625,7 @@ This turns provider limits into explicit system behavior.
 
 ---
 
-## 7.10 Queues Are Shock Absorbers
+## 6.10 Queues Are Shock Absorbers
 
 Queues do more than enable asynchronous communication.
 
@@ -690,7 +690,7 @@ Queue depth is therefore an important operational signal.
 
 ---
 
-## 7.11 Dead-Letter Queues
+## 6.11 Dead-Letter Queues
 
 Some messages will never succeed automatically.
 
@@ -762,7 +762,7 @@ A dead-letter queue nobody monitors is merely a durable place to lose messages.
 
 ---
 
-## 7.12 Poison Messages
+## 6.12 Poison Messages
 
 A poison message is one that repeatedly causes processing failure.
 
@@ -797,7 +797,7 @@ This distinction prevents one bad piece of data from becoming a system-wide avai
 
 ---
 
-## 7.13 Duplicate Delivery Is Normal
+## 6.13 Duplicate Delivery Is Normal
 
 Many messaging systems provide **at-least-once delivery**.
 
@@ -851,7 +851,7 @@ This converts duplicate delivery from an exceptional event into normal processin
 
 ---
 
-## 7.14 Ordering Is More Complicated Than It Appears
+## 6.14 Ordering Is More Complicated Than It Appears
 
 Imagine Atlas publishes:
 
@@ -897,7 +897,7 @@ Again, the architecture comes from understanding the business invariant rather t
 
 ---
 
-## 7.15 Graceful Degradation
+## 6.15 Graceful Degradation
 
 A resilient system does not always need every dependency to provide useful service.
 
@@ -941,7 +941,7 @@ Resilience therefore crosses organizational boundaries.
 
 ---
 
-## 7.16 Health Checks Need Meaning
+## 6.16 Health Checks Need Meaning
 
 Modern platforms frequently ask applications whether they are healthy.
 
@@ -989,7 +989,7 @@ A useful rule is:
 
 ---
 
-## 7.17 Observability Completes Resilience
+## 6.17 Observability Completes Resilience
 
 A retry policy can hide transient failures from users.
 
@@ -1033,7 +1033,7 @@ Resilience without observability can turn visible failures into invisible deteri
 
 ---
 
-## 7.18 Resilience Policies Must Compose Carefully
+## 6.18 Resilience Policies Must Compose Carefully
 
 One of the subtler problems appears when individually reasonable resilience policies are combined.
 
@@ -1080,7 +1080,7 @@ Otherwise, defensive mechanisms can collectively create offensive traffic.
 
 ---
 
-## 7.19 The Failure Budget
+## 6.19 The Failure Budget
 
 There is another important realization.
 
@@ -1134,7 +1134,7 @@ This prevents teams from spending enormous amounts of engineering effort elimina
 
 ---
 
-## 7.20 Designing the Failure Path
+## 6.20 Designing the Failure Path
 
 For an important Atlas operation, we can now ask a structured set of questions.
 
@@ -1221,7 +1221,7 @@ It is part of the design.
 
 ---
 
-## 7.21 Failure Domains
+## 6.21 Failure Domains
 
 Perhaps the most useful way to think about resilience is in terms of **failure domains**.
 
@@ -1275,7 +1275,7 @@ It is controlled dependency.
 
 ---
 
-## 7.22 Failure Is Information
+## 6.22 Failure Is Information
 
 Failures reveal assumptions.
 
@@ -1316,7 +1316,7 @@ This is why incident reviews can become an important source of architectural kno
 
 ---
 
-## 7.23 The Senior Engineer's Question
+## 6.23 The Senior Engineer's Question
 
 When reviewing a system diagram, it is easy to focus on the arrows.
 

@@ -1,4 +1,4 @@
-# Chapter 9 — Evolutionary Architecture
+# Chapter 8 — Evolutionary Architecture
 
 Architecture is often drawn as if it were permanent.
 
@@ -48,7 +48,7 @@ That is the problem of evolutionary architecture.
 
 ---
 
-## 9.1 Architecture Is a Living Constraint System
+## 8.1 Architecture Is a Living Constraint System
 
 Architecture is sometimes treated as a collection of components.
 
@@ -117,7 +117,7 @@ Technology is one way of realizing them.
 
 ---
 
-## 9.2 Architecture Decays
+## 8.2 Architecture Decays
 
 Software architecture rarely collapses because someone intentionally decides:
 
@@ -181,7 +181,7 @@ Architectural erosion can remain hidden behind diagrams and documentation that d
 
 ---
 
-## 9.3 Detecting Architectural Decay
+## 8.3 Detecting Architectural Decay
 
 If architecture can decay, an important question follows:
 
@@ -230,7 +230,7 @@ It participates in the build.
 
 ---
 
-## 9.4 Fitness Functions
+## 8.4 Fitness Functions
 
 Evolutionary architecture often uses the concept of an **architectural fitness function**.
 
@@ -280,7 +280,7 @@ The important principle is:
 
 ---
 
-## 9.5 Fitness Functions Are Broader Than Tests
+## 8.5 Fitness Functions Are Broader Than Tests
 
 A fitness function can take many forms.
 
@@ -330,7 +330,7 @@ They convert architectural intent into something observable.
 
 ---
 
-## 9.6 Architecture That Can Detect Its Own Decay
+## 8.6 Architecture That Can Detect Its Own Decay
 
 This leads to a powerful idea.
 
@@ -380,7 +380,7 @@ This is a major improvement over architecture that exists only in a document.
 
 ---
 
-## 9.7 Changeability Is an Architectural Quality
+## 8.7 Changeability Is an Architectural Quality
 
 Teams often optimize for runtime properties:
 
@@ -446,7 +446,7 @@ Architecture determines the **cost and blast radius of future change**.
 
 ---
 
-## 9.8 Reversibility Matters
+## 8.8 Reversibility Matters
 
 Not every decision deserves the same amount of architectural ceremony.
 
@@ -506,7 +506,7 @@ Architecture effort should concentrate where reversibility is low and consequenc
 
 ---
 
-## 9.9 Delay Irreversible Decisions When Possible
+## 8.9 Delay Irreversible Decisions When Possible
 
 There is a subtle but important principle here.
 
@@ -543,7 +543,7 @@ It is **strategic optionality**.
 
 ---
 
-## 9.10 Safe Evolution Requires Compatibility
+## 8.10 Safe Evolution Requires Compatibility
 
 Changing a distributed system is different from changing a single application.
 
@@ -585,7 +585,7 @@ The architecture must therefore support coexistence.
 
 ---
 
-## 9.11 Expand and Contract
+## 8.11 Expand and Contract
 
 A useful migration technique is **expand and contract**.
 
@@ -643,7 +643,7 @@ This allows the architecture to change without requiring synchronized deployment
 
 ---
 
-## 9.12 Database Evolution
+## 8.12 Database Evolution
 
 Databases create particularly strong coupling because schema changes affect running code and persistent state.
 
@@ -682,7 +682,7 @@ Schema evolution should be designed with the same care as service APIs.
 
 ---
 
-## 9.13 Event Evolution
+## 8.13 Event Evolution
 
 Events deserve even greater caution.
 
@@ -732,7 +732,7 @@ Contracts include meaning, not merely shape.
 
 ---
 
-## 9.14 Strangler Evolution
+## 8.14 Strangler Evolution
 
 Sometimes Atlas may need to replace a large legacy capability.
 
@@ -787,7 +787,7 @@ The architecture evolves through controlled replacement rather than a single mom
 
 ---
 
-## 9.15 Anti-Corruption Layers Protect the New Model
+## 8.15 Anti-Corruption Layers Protect the New Model
 
 Legacy systems often contain valuable business behavior mixed with historical assumptions.
 
@@ -821,7 +821,7 @@ It is a way of protecting architectural boundaries during evolution.
 
 ---
 
-## 9.16 Feature Flags Separate Deployment From Release
+## 8.16 Feature Flags Separate Deployment From Release
 
 Deploying code and exposing behavior do not have to happen simultaneously.
 
@@ -879,7 +879,7 @@ The removal step is part of the design.
 
 ---
 
-## 9.17 Canary Releases
+## 8.17 Canary Releases
 
 A canary release sends a small amount of production traffic to a new version.
 
@@ -925,7 +925,7 @@ This converts deployment from a binary event into an evidence-driven transition.
 
 ---
 
-## 9.18 Blue-Green Deployment
+## 8.18 Blue-Green Deployment
 
 Another strategy maintains two production environments.
 
@@ -957,9 +957,9 @@ As always, architecture buys one property by paying for another.
 
 ---
 
-## 9.19 Evolution Needs Observability
+## 8.19 Evolution Needs Observability
 
-Chapter 8 examined observability in depth.
+Chapter 7 examined observability in depth.
 
 Its relationship with evolutionary architecture is fundamental.
 
@@ -1008,7 +1008,7 @@ This is one reason architecture and operations cannot be separated cleanly in mo
 
 ---
 
-## 9.20 Evolution Needs Automated Delivery
+## 8.20 Evolution Needs Automated Delivery
 
 If deploying Atlas is dangerous and manual, the organization will avoid deployment.
 
@@ -1052,7 +1052,7 @@ It is an architectural enabler for safe evolution.
 
 ---
 
-## 9.21 Architecture Ownership
+## 8.21 Architecture Ownership
 
 An architecture without ownership will drift.
 
@@ -1093,7 +1093,7 @@ It is coherent autonomy.
 
 ---
 
-## 9.22 Guardrails Instead of Gates
+## 8.22 Guardrails Instead of Gates
 
 A gate says:
 
@@ -1136,7 +1136,7 @@ This scales better than requiring architectural approval for every library or cl
 
 ---
 
-## 9.23 Architecture Decision Records Preserve Reasoning
+## 8.23 Architecture Decision Records Preserve Reasoning
 
 Atlas already uses Architecture Decision Records.
 
@@ -1181,7 +1181,7 @@ It preserves reasoning, not authority.
 
 ---
 
-## 9.24 ADRs Should Be Allowed to Become Obsolete
+## 8.24 ADRs Should Be Allowed to Become Obsolete
 
 An ADR is not a permanent commandment.
 
@@ -1221,7 +1221,7 @@ Architecture documentation should tell the truth about time.
 
 ---
 
-## 9.25 Technical Debt Is Not Automatically Architectural Debt
+## 8.25 Technical Debt Is Not Automatically Architectural Debt
 
 Not every imperfect piece of code threatens the architecture.
 
@@ -1263,7 +1263,7 @@ The second deserves architectural attention.
 
 ---
 
-## 9.26 Intentional Debt Can Be Rational
+## 8.26 Intentional Debt Can Be Rational
 
 Debt is not always the result of negligence.
 
@@ -1299,7 +1299,7 @@ Unmanaged debt has hope.
 
 ---
 
-## 9.27 Architecture Reviews Should Examine Change
+## 8.27 Architecture Reviews Should Examine Change
 
 Architecture reviews often ask:
 
@@ -1333,7 +1333,7 @@ A design that is elegant after migration but impossible to reach safely may not 
 
 ---
 
-## 9.28 Design the Transition State
+## 8.28 Design the Transition State
 
 Architectural diagrams often show:
 
@@ -1404,7 +1404,7 @@ They are still architecture.
 
 ---
 
-## 9.29 Temporary Architecture Needs an Exit
+## 8.29 Temporary Architecture Needs an Exit
 
 Temporary components have a habit of becoming permanent.
 
@@ -1436,7 +1436,7 @@ This makes architectural cleanup measurable rather than aspirational.
 
 ---
 
-## 9.30 Team Structure Influences Architecture
+## 8.30 Team Structure Influences Architecture
 
 Software boundaries and organizational boundaries affect one another.
 
@@ -1474,7 +1474,7 @@ A theoretically elegant architecture that fights the organization's actual commu
 
 ---
 
-## 9.31 Conway's Law as a Design Constraint
+## 8.31 Conway's Law as a Design Constraint
 
 Conway's Law is commonly summarized as the observation that organizations tend to design systems that mirror their communication structures.
 
@@ -1505,7 +1505,7 @@ The architecture may be technically distributed while organizationally monolithi
 
 ---
 
-## 9.32 Platform Engineering and Paved Roads
+## 8.32 Platform Engineering and Paved Roads
 
 As Atlas grows, teams repeatedly need similar capabilities:
 
@@ -1554,7 +1554,7 @@ It is tooling that makes the correct path the easiest path.
 
 ---
 
-## 9.33 Standardization Versus Innovation
+## 8.33 Standardization Versus Innovation
 
 Paved roads create another tradeoff.
 
@@ -1598,7 +1598,7 @@ Governance should focus on boundaries with system-wide consequences.
 
 ---
 
-## 9.34 Evolution Across Cloud Platforms
+## 8.34 Evolution Across Cloud Platforms
 
 Atlas may run in Azure today and encounter AWS or GCP requirements later.
 
@@ -1637,7 +1637,7 @@ That is a healthier form of portability than attempting to erase every platform 
 
 ---
 
-## 9.35 Evolutionary Architecture Is Evidence Driven
+## 8.35 Evolutionary Architecture Is Evidence Driven
 
 Architecture can become ideological.
 
@@ -1687,7 +1687,7 @@ Technology follows the problem.
 
 ---
 
-## 9.36 Evolution Is Not Constant Rewriting
+## 8.36 Evolution Is Not Constant Rewriting
 
 An evolvable system does not mean an endlessly rewritten system.
 
@@ -1718,7 +1718,7 @@ Evolution is controlled adaptation, not architectural restlessness.
 
 ---
 
-## 9.37 The Architecture Feedback Loop
+## 8.37 The Architecture Feedback Loop
 
 The ideas in this course now connect into a feedback loop.
 
@@ -1756,7 +1756,7 @@ This is architecture as a continuous engineering discipline rather than a design
 
 ---
 
-## 9.38 The Senior Engineer's Questions
+## 8.38 The Senior Engineer's Questions
 
 When reviewing an architecture, a senior engineer should ask not only whether the design works today.
 
@@ -1799,7 +1799,7 @@ Those questions move architectural thinking from static design to controlled evo
 
 ---
 
-## 9.39 Architecture Is a Direction, Not a Destination
+## 8.39 Architecture Is a Direction, Not a Destination
 
 Atlas will never reach a point where every architectural question has been answered permanently.
 
@@ -1837,4 +1837,4 @@ And it prepares us for the final question of the course:
 
 > **How does an architect actually approach a problem and turn uncertainty into a workable system design?**
 
-That is the subject of Chapter 10 — **The Architect's Method**.
+That is the subject of Chapter 9 — **The Architect's Method**.

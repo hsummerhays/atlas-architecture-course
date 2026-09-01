@@ -1,4 +1,4 @@
-# Chapter 8 — Observability: Understanding a Running System
+# Chapter 7 — Observability: Understanding a Running System
 
 A system can be correct in source code and still be incomprehensible in production.
 
@@ -62,7 +62,7 @@ That difference is operational maturity.
 
 ---
 
-## 8.1 Monitoring and Observability Are Related but Different
+## 7.1 Monitoring and Observability Are Related but Different
 
 Monitoring asks known questions.
 
@@ -116,7 +116,7 @@ It is not the whole of it.
 
 ---
 
-## 8.2 The Three Traditional Pillars
+## 7.2 The Three Traditional Pillars
 
 Observability discussions commonly begin with three telemetry types:
 
@@ -196,7 +196,7 @@ No single telemetry type replaces the others.
 
 ---
 
-## 8.3 Structured Logging
+## 7.3 Structured Logging
 
 A traditional log message might look like:
 
@@ -236,7 +236,7 @@ Atlas therefore treats logs as structured data rather than decorated console out
 
 ---
 
-## 8.4 Log Events, Not Sentences
+## 7.4 Log Events, Not Sentences
 
 A useful way to think about logging is:
 
@@ -277,7 +277,7 @@ It is not reasonable when there are billions.
 
 ---
 
-## 8.5 Log Levels Need Discipline
+## 7.5 Log Levels Need Discipline
 
 Most logging frameworks provide levels such as:
 
@@ -336,7 +336,7 @@ Telemetry should preserve meaning.
 
 ---
 
-## 8.6 Correlation IDs Connect the Story
+## 7.6 Correlation IDs Connect the Story
 
 Consider a request moving through several services:
 
@@ -390,7 +390,7 @@ The processing context should preserve enough identifiers to connect the later w
 
 ---
 
-## 8.7 Distributed Tracing
+## 7.7 Distributed Tracing
 
 Distributed tracing formalizes this idea.
 
@@ -443,7 +443,7 @@ Without tracing, the application merely appears slow.
 
 ---
 
-## 8.8 Trace Context Across Messaging
+## 7.8 Trace Context Across Messaging
 
 Tracing synchronous HTTP calls is relatively straightforward.
 
@@ -492,7 +492,7 @@ This allows observability tools to connect asynchronous work into a larger causa
 
 ---
 
-## 8.9 Metrics Describe System Behavior
+## 7.9 Metrics Describe System Behavior
 
 Logs answer detailed questions about individual events.
 
@@ -535,7 +535,7 @@ That gives operators an immediate view of system health.
 
 ---
 
-## 8.10 Averages Hide Problems
+## 7.10 Averages Hide Problems
 
 Suppose Atlas reports:
 
@@ -581,7 +581,7 @@ Even if each call is usually fast, the probability that at least one call lands 
 
 ---
 
-## 8.11 The Four Golden Signals
+## 7.11 The Four Golden Signals
 
 A useful operational model comes from site reliability engineering.
 
@@ -643,7 +643,7 @@ This creates a consistent way of reasoning across the platform.
 
 ---
 
-## 8.12 RED and USE
+## 7.12 RED and USE
 
 Two related models are also useful.
 
@@ -682,7 +682,7 @@ They are checklists that reduce the chance that teams monitor only the easiest m
 
 ---
 
-## 8.13 Technical Metrics Are Not Enough
+## 7.13 Technical Metrics Are Not Enough
 
 Atlas could have perfect infrastructure metrics while failing the business.
 
@@ -731,7 +731,7 @@ This is often the most important form of monitoring.
 
 ---
 
-## 8.14 High Cardinality
+## 7.14 High Cardinality
 
 Telemetry dimensions are powerful.
 
@@ -792,7 +792,7 @@ Choosing the correct telemetry type is therefore partly a data-modeling problem.
 
 ---
 
-## 8.15 Observability Has a Cost
+## 7.15 Observability Has a Cost
 
 Telemetry is not free.
 
@@ -841,7 +841,7 @@ It is **sufficient evidence to understand the system economically**.
 
 ---
 
-## 8.16 Sampling
+## 7.16 Sampling
 
 Suppose Atlas handles:
 
@@ -880,7 +880,7 @@ Again, the architecture is balancing diagnostic value against cost.
 
 ---
 
-## 8.17 Dashboards Should Answer Questions
+## 7.17 Dashboards Should Answer Questions
 
 A dashboard filled with graphs is not automatically useful.
 
@@ -936,7 +936,7 @@ It is the one that lets an operator answer the relevant question quickly.
 
 ---
 
-## 8.18 Alert on Symptoms, Not Every Event
+## 7.18 Alert on Symptoms, Not Every Event
 
 One failed request does not necessarily require waking an engineer.
 
@@ -981,7 +981,7 @@ Diagnostic metrics can then help determine the cause.
 
 ---
 
-## 8.19 Alerts Must Be Actionable
+## 7.19 Alerts Must Be Actionable
 
 Every production alert should imply a reasonable human action.
 
@@ -1024,7 +1024,7 @@ Only one accelerates incident response.
 
 ---
 
-## 8.20 Service-Level Indicators
+## 7.20 Service-Level Indicators
 
 A **Service-Level Indicator (SLI)** measures something users care about.
 
@@ -1049,7 +1049,7 @@ SLIs transform vague concepts such as "reliable" into measurable behavior.
 
 ---
 
-## 8.21 Service-Level Objectives
+## 7.21 Service-Level Objectives
 
 A **Service-Level Objective (SLO)** establishes a target for an SLI.
 
@@ -1088,7 +1088,7 @@ SLOs force those questions to become explicit.
 
 ---
 
-## 8.22 Error Budgets
+## 7.22 Error Budgets
 
 If an SLO allows less than perfect reliability, the remaining amount is the **error budget**.
 
@@ -1126,7 +1126,7 @@ This turns reliability into a measurable engineering constraint rather than an a
 
 ---
 
-## 8.23 Observability Across Tenants
+## 7.23 Observability Across Tenants
 
 Atlas is a multi-tenant platform.
 
@@ -1178,7 +1178,7 @@ The exact design depends on scale and privacy requirements.
 
 ---
 
-## 8.24 Sensitive Data Does Not Belong in Telemetry
+## 7.24 Sensitive Data Does Not Belong in Telemetry
 
 Logs are frequently copied into centralized systems.
 
@@ -1218,7 +1218,7 @@ A useful principle is:
 
 ---
 
-## 8.25 OpenTelemetry and Vendor Neutrality
+## 7.25 OpenTelemetry and Vendor Neutrality
 
 Atlas may run on:
 
@@ -1267,7 +1267,7 @@ It creates a useful architectural boundary between application instrumentation a
 
 ---
 
-## 8.26 Cloud Observability
+## 7.26 Cloud Observability
 
 Atlas can map the same observability concepts onto different cloud platforms.
 
@@ -1328,7 +1328,7 @@ Products change faster than principles.
 
 ---
 
-## 8.27 Observing Message Queues
+## 7.27 Observing Message Queues
 
 Message-driven systems require signals beyond ordinary HTTP monitoring.
 
@@ -1373,7 +1373,7 @@ Backlog should therefore be interpreted relative to throughput and age.
 
 ---
 
-## 8.28 Observing Retries
+## 7.28 Observing Retries
 
 Retries often make systems appear healthier than they are.
 
@@ -1405,7 +1405,7 @@ A sudden increase in retries is often an early-warning signal.
 
 ---
 
-## 8.29 Observing Circuit Breakers
+## 7.29 Observing Circuit Breakers
 
 A circuit breaker is a state machine.
 
@@ -1437,7 +1437,7 @@ Otherwise a graceful resilience mechanism can look like mysterious application f
 
 ---
 
-## 8.30 Observing Timeouts
+## 7.30 Observing Timeouts
 
 Timeouts deserve their own telemetry.
 
@@ -1477,7 +1477,7 @@ This helps answer an important question:
 
 ---
 
-## 8.31 Observing Rate Limits
+## 7.31 Observing Rate Limits
 
 Rate limiting creates intentional rejection or delay.
 
@@ -1519,7 +1519,7 @@ Those conditions may require very different responses.
 
 ---
 
-## 8.32 Deployment Markers
+## 7.32 Deployment Markers
 
 One of the most useful pieces of operational context is remarkably simple:
 
@@ -1562,7 +1562,7 @@ The system should know.
 
 ---
 
-## 8.33 Observability During Incident Response
+## 7.33 Observability During Incident Response
 
 Good observability changes the incident workflow.
 
@@ -1606,7 +1606,7 @@ It is to replace speculation with evidence.
 
 ---
 
-## 8.34 Runbooks Turn Signals Into Action
+## 7.34 Runbooks Turn Signals Into Action
 
 An alert identifies a problem.
 
@@ -1636,7 +1636,7 @@ Observability and operational documentation therefore reinforce one another.
 
 ---
 
-## 8.35 Observability Is Part of the Interface
+## 7.35 Observability Is Part of the Interface
 
 When engineers design a component, they usually think about its functional interface.
 
@@ -1676,7 +1676,7 @@ It explains its behavior while performing that work.
 
 ---
 
-## 8.36 Instrument the Boundaries
+## 7.36 Instrument the Boundaries
 
 Not every line of code needs telemetry.
 
@@ -1708,7 +1708,7 @@ Instrumenting them creates a map of system behavior without drowning engineers i
 
 ---
 
-## 8.37 The Cost of Missing Context
+## 7.37 The Cost of Missing Context
 
 Consider this log:
 
@@ -1746,7 +1746,7 @@ Atlas needs evidence.
 
 ---
 
-## 8.38 The Senior Engineer's Questions
+## 7.38 The Senior Engineer's Questions
 
 When reviewing a new service or integration, a senior engineer should ask more than:
 
@@ -1784,7 +1784,7 @@ These questions change implementation decisions early enough that observability 
 
 ---
 
-## 8.39 You Cannot Operate What You Cannot Understand
+## 7.39 You Cannot Operate What You Cannot Understand
 
 Atlas is not finished when it successfully processes requests.
 

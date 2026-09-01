@@ -371,7 +371,7 @@ Atlas preserves one authoritative local fact and one durable publication intent.
 
 The shipment left a message, but the message is valuable only because its meaning, ownership, and recovery path are explicit.
 
-In Chapter 4, we will ask how operators can see this system behaving in production. We will connect event identifiers, correlation context, queue age, outbox backlog, consumer failures, and business convergence to the questions an operator must answer.
+In Chapter 4, we will examine identity, authority, data protection, and supply-chain boundaries across the synchronous and asynchronous pathways of Atlas.
 
 **Narrated-edition note:** The narration ends here. Editorial Alignment, Engineering Commentary, Interview Stops, the review exercise, checklists, and the editorial record remain in Markdown as review and instructor material and may be excluded from the narrated edition.
 

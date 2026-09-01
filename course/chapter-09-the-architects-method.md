@@ -1,4 +1,4 @@
-# Chapter 10 — The Architect's Method
+# Chapter 9 — The Architect's Method
 
 Architecture can appear mysterious when viewed only through finished diagrams.
 
@@ -48,7 +48,7 @@ This final chapter turns the lessons of the course into a practical method.
 
 ---
 
-## 10.1 Begin With the Problem, Not the Technology
+## 9.1 Begin With the Problem, Not the Technology
 
 Architecture conversations often begin too late.
 
@@ -108,7 +108,7 @@ Only then does the technology choice become meaningful.
 
 ---
 
-## 10.2 Separate Requirements From Solutions
+## 9.2 Separate Requirements From Solutions
 
 Consider:
 
@@ -162,7 +162,7 @@ An architect tries to uncover the requirement beneath the proposed implementatio
 
 ---
 
-## 10.3 Functional Requirements Describe Behavior
+## 9.3 Functional Requirements Describe Behavior
 
 Functional requirements describe what the system must do.
 
@@ -194,7 +194,7 @@ The difference comes from quality attributes and constraints.
 
 ---
 
-## 10.4 Quality Attributes Shape Architecture
+## 9.4 Quality Attributes Shape Architecture
 
 Suppose Atlas must create a shipment.
 
@@ -243,7 +243,7 @@ Architecture is largely the process of balancing these properties under real con
 
 ---
 
-## 10.5 Make Quality Attributes Concrete
+## 9.5 Make Quality Attributes Concrete
 
 Statements such as:
 
@@ -295,7 +295,7 @@ Vague adjectives create architectural arguments.
 
 ---
 
-## 10.6 Identify Constraints Early
+## 9.6 Identify Constraints Early
 
 Architects do not design in unlimited space.
 
@@ -340,7 +340,7 @@ within the actual environment.
 
 ---
 
-## 10.7 Constraints Are Not All Permanent
+## 9.7 Constraints Are Not All Permanent
 
 Some constraints are fixed.
 
@@ -376,7 +376,7 @@ If an architecture depends heavily on an assumption, that assumption should be v
 
 ---
 
-## 10.8 Discover the Business Invariants
+## 9.8 Discover the Business Invariants
 
 An invariant is something that must remain true.
 
@@ -410,7 +410,7 @@ Architecture emerges from protecting business truth.
 
 ---
 
-## 10.9 Find the Important Failure Cases
+## 9.9 Find the Important Failure Cases
 
 The happy path is rarely enough.
 
@@ -434,7 +434,7 @@ What if the dependency remains unavailable
 for several hours?
 ```
 
-Chapter 7 showed why these questions matter.
+Chapter 6 showed why these questions matter.
 
 The architect does not need to eliminate every failure.
 
@@ -442,7 +442,7 @@ The architect needs to decide what failure means and how far it is allowed to sp
 
 ---
 
-## 10.10 Model the Domain Before the Infrastructure
+## 9.10 Model the Domain Before the Infrastructure
 
 Suppose Atlas integrates with shipping carriers.
 
@@ -492,7 +492,7 @@ It reveals the concepts around which stable boundaries can form.
 
 ---
 
-## 10.11 Identify Bounded Capabilities
+## 9.11 Identify Bounded Capabilities
 
 Not every class deserves a service.
 
@@ -532,7 +532,7 @@ Use them where they buy something valuable.
 
 ---
 
-## 10.12 Follow the Data
+## 9.12 Follow the Data
 
 One of the best ways to understand a system is to follow a business operation through it.
 
@@ -586,7 +586,7 @@ Each arrow is a design decision.
 
 ---
 
-## 10.13 Data Ownership Reveals Boundaries
+## 9.13 Data Ownership Reveals Boundaries
 
 A service boundary becomes weak if every service can modify every database.
 
@@ -628,7 +628,7 @@ That question often reveals the real service boundary.
 
 ---
 
-## 10.14 Choose Synchronous Communication Deliberately
+## 9.14 Choose Synchronous Communication Deliberately
 
 Synchronous communication is useful when the caller needs an immediate answer.
 
@@ -676,7 +676,7 @@ Unexamined synchronous dependency chains are dangerous.
 
 ---
 
-## 10.15 Choose Asynchronous Communication Deliberately
+## 9.15 Choose Asynchronous Communication Deliberately
 
 Asynchronous communication is useful when work can happen later.
 
@@ -717,7 +717,7 @@ Choose it because the workflow benefits from the properties messaging provides.
 
 ---
 
-## 10.16 Define Consistency Requirements
+## 9.16 Define Consistency Requirements
 
 Distributed systems force explicit decisions about consistency.
 
@@ -761,7 +761,7 @@ Consistency is a business decision expressed technically.
 
 ---
 
-## 10.17 Define Trust Boundaries
+## 9.17 Define Trust Boundaries
 
 Security architecture begins by identifying trust transitions.
 
@@ -797,7 +797,7 @@ Security becomes much clearer when expressed around trust boundaries instead of 
 
 ---
 
-## 10.18 Design for Operations
+## 9.18 Design for Operations
 
 Before implementation, ask:
 
@@ -819,7 +819,7 @@ How will we correlate behavior
 with a deployment?
 ```
 
-Chapter 4 and Chapter 8 explored these questions.
+Chapter 7 explored these questions in depth.
 
 Observability should not be postponed until production.
 
@@ -827,7 +827,7 @@ If the architecture cannot explain itself, operating it will be unnecessarily di
 
 ---
 
-## 10.19 Identify the Most Important Tradeoffs
+## 9.19 Identify the Most Important Tradeoffs
 
 Architecture rarely offers a choice between:
 
@@ -883,7 +883,7 @@ X is best practice.
 
 ---
 
-## 10.20 Prefer the Simplest Architecture That Protects the Important Properties
+## 9.20 Prefer the Simplest Architecture That Protects the Important Properties
 
 Architecture can become a form of speculative engineering.
 
@@ -920,7 +920,7 @@ Knowing what not to build is architectural judgment.
 
 ---
 
-## 10.21 Create a Conceptual Architecture First
+## 9.21 Create a Conceptual Architecture First
 
 Before selecting every product, describe the system conceptually.
 
@@ -963,7 +963,7 @@ Only after that should product-specific deployment diagrams dominate the discuss
 
 ---
 
-## 10.22 Add Technology as a Second Layer
+## 9.22 Add Technology as a Second Layer
 
 Once the conceptual architecture is understood, technology can realize it.
 
@@ -1015,7 +1015,7 @@ That distinction is especially valuable in interviews and design reviews.
 
 ---
 
-## 10.23 Build Multiple Views
+## 9.23 Build Multiple Views
 
 No single diagram explains an enterprise system.
 
@@ -1069,7 +1069,7 @@ Architecture communication improves dramatically when the diagram matches the qu
 
 ---
 
-## 10.24 From Model to Blueprint
+## 9.24 From Model to Blueprint
 
 At some point the architecture must become implementable.
 
@@ -1101,7 +1101,7 @@ It provides enough structure that multiple engineers can build coherent parts of
 
 ---
 
-## 10.25 Architecture Should Enable Parallel Work
+## 9.25 Architecture Should Enable Parallel Work
 
 A useful architecture allows teams to work independently where possible.
 
@@ -1137,7 +1137,7 @@ That is one of its practical economic benefits.
 
 ---
 
-## 10.26 Prototype the Riskiest Assumptions
+## 9.26 Prototype the Riskiest Assumptions
 
 Do not prototype what is already well understood.
 
@@ -1177,7 +1177,7 @@ Architecture improves when uncertainty is attacked deliberately.
 
 ---
 
-## 10.27 Use Walking Skeletons
+## 9.27 Use Walking Skeletons
 
 A walking skeleton is a minimal end-to-end implementation.
 
@@ -1219,7 +1219,7 @@ This reveals integration problems while they are still inexpensive.
 
 ---
 
-## 10.28 Make Decisions at the Last Responsible Moment
+## 9.28 Make Decisions at the Last Responsible Moment
 
 Too early:
 
@@ -1259,7 +1259,7 @@ Low-impact, reversible decisions can wait.
 
 ---
 
-## 10.29 Record Significant Decisions
+## 9.29 Record Significant Decisions
 
 When Atlas makes an architectural decision, preserve the reasoning.
 
@@ -1285,7 +1285,7 @@ Architecture should preserve the history of reasoning, not merely the current co
 
 ---
 
-## 10.30 Architecture in Practice Is Iterative
+## 9.30 Architecture in Practice Is Iterative
 
 The process is not:
 
@@ -1318,7 +1318,7 @@ Revise
    ↺
 ```
 
-Chapter 9 described this as evolutionary architecture.
+Chapter 8 described this as evolutionary architecture.
 
 The architect's method must therefore include feedback.
 
@@ -1326,7 +1326,7 @@ Production teaches us things design meetings cannot.
 
 ---
 
-## 10.31 Use Evidence to Challenge the Architecture
+## 9.31 Use Evidence to Challenge the Architecture
 
 Suppose Atlas was designed assuming:
 
@@ -1360,7 +1360,7 @@ The running system is.
 
 ---
 
-## 10.32 Incidents Are Architecture Reviews Conducted by Reality
+## 9.32 Incidents Are Architecture Reviews Conducted by Reality
 
 An incident exposes assumptions under stress.
 
@@ -1395,7 +1395,7 @@ Incident review is therefore one of the most valuable architecture feedback mech
 
 ---
 
-## 10.33 Communicating Architecture
+## 9.33 Communicating Architecture
 
 An architecture that cannot be explained is difficult to build collaboratively.
 
@@ -1444,7 +1444,7 @@ The view changes.
 
 ---
 
-## 10.34 Start With the Story
+## 9.34 Start With the Story
 
 A powerful architecture explanation often begins with a business story.
 
@@ -1490,7 +1490,7 @@ This is why sequence-based explanation is so effective.
 
 ---
 
-## 10.35 Explain Why Before How
+## 9.35 Explain Why Before How
 
 Compare:
 
@@ -1520,7 +1520,7 @@ That pattern works remarkably well in design reviews and interviews.
 
 ---
 
-## 10.36 Explain Tradeoffs Explicitly
+## 9.36 Explain Tradeoffs Explicitly
 
 Avoid presenting architectural choices as universally correct.
 
@@ -1546,7 +1546,7 @@ Technology lists demonstrate exposure.
 
 ---
 
-## 10.37 Use Progressive Disclosure
+## 9.37 Use Progressive Disclosure
 
 Do not begin an architecture explanation with every detail.
 
@@ -1587,7 +1587,7 @@ Architecture communication should reduce cognitive load, not demonstrate how muc
 
 ---
 
-## 10.38 Distinguish Implemented From Planned
+## 9.38 Distinguish Implemented From Planned
 
 A reference architecture can contain:
 
@@ -1622,7 +1622,7 @@ It also keeps architecture documentation honest.
 
 ---
 
-## 10.39 The Whiteboard Method
+## 9.39 The Whiteboard Method
 
 When asked to design a system live, begin with a few anchors.
 
@@ -1648,7 +1648,7 @@ It does not begin as a memorized cloud reference architecture.
 
 ---
 
-## 10.40 The Interview Method
+## 9.40 The Interview Method
 
 Architecture interviews often reward structured thinking more than perfect recall.
 
@@ -1690,7 +1690,7 @@ The interviewer can follow the architecture as it develops.
 
 ---
 
-## 10.41 You Do Not Need to Know Every Product
+## 9.41 You Do Not Need to Know Every Product
 
 Architecture is not a memory competition.
 
@@ -1716,7 +1716,7 @@ Principles make product knowledge useful.
 
 ---
 
-## 10.42 Ask What Changes at Scale
+## 9.42 Ask What Changes at Scale
 
 A design can begin simple.
 
@@ -1746,7 +1746,7 @@ That allows evolution before crisis.
 
 ---
 
-## 10.43 Ask What Changes With Team Growth
+## 9.43 Ask What Changes With Team Growth
 
 Scale is not only traffic.
 
@@ -1772,7 +1772,7 @@ This is another reason architecture should evolve from evidence.
 
 ---
 
-## 10.44 Ask What Must Never Happen
+## 9.44 Ask What Must Never Happen
 
 A powerful architecture exercise is to ask:
 
@@ -1800,7 +1800,7 @@ Architecture is partly the discipline of making unacceptable outcomes difficult.
 
 ---
 
-## 10.45 Ask What Can Fail Safely
+## 9.45 Ask What Can Fail Safely
 
 The complementary question is:
 
@@ -1829,7 +1829,7 @@ Reliability should be proportional to business consequence.
 
 ---
 
-## 10.46 Ask Who Owns the Consequence
+## 9.46 Ask Who Owns the Consequence
 
 Every architectural choice creates operational consequences.
 
@@ -1869,7 +1869,7 @@ Architecture without ownership is incomplete.
 
 ---
 
-## 10.47 The Architecture Checklist
+## 9.47 The Architecture Checklist
 
 Before considering a design mature, ask:
 
@@ -1938,7 +1938,7 @@ It is a way to make sure judgment is applied to the important dimensions.
 
 ---
 
-## 10.48 The Atlas Method in One Flow
+## 9.48 The Atlas Method in One Flow
 
 The entire course can now be condensed into one reasoning sequence.
 
@@ -1980,7 +1980,7 @@ But the sequence provides a reliable map when a problem feels ambiguous.
 
 ---
 
-## 10.49 What the Atlas Platform Has Taught Us
+## 9.49 What the Atlas Platform Has Taught Us
 
 Atlas began as an integration platform.
 
@@ -2017,7 +2017,7 @@ It is about reasoning.
 
 ---
 
-## 10.50 Architecture Is the Management of Consequences
+## 9.50 Architecture Is the Management of Consequences
 
 Every technical decision has consequences.
 
@@ -2043,7 +2043,7 @@ That is why architecture is fundamentally about tradeoffs.
 
 ---
 
-## 10.51 Architecture Is Also the Management of Uncertainty
+## 9.51 Architecture Is Also the Management of Uncertainty
 
 At the beginning of a system, we do not know everything.
 
@@ -2072,7 +2072,7 @@ That is how architecture manages uncertainty without becoming paralyzed by it.
 
 ---
 
-## 10.52 The Architect's Responsibility
+## 9.52 The Architect's Responsibility
 
 An architect has responsibilities to several groups.
 
@@ -2117,7 +2117,7 @@ It is stewardship.
 
 ---
 
-## 10.53 The Final Question
+## 9.53 The Final Question
 
 When facing an unfamiliar architecture problem, it is tempting to ask:
 

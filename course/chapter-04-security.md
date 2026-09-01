@@ -1,4 +1,4 @@
-# Chapter 5 — Security
+# Chapter 4 — Security
 
 ## Identity, Authority, Data Protection, and Supply-Chain Boundaries
 
@@ -43,7 +43,7 @@ Until implementation evidence is linked, detailed runtime examples in this chapt
 
 Thursday morning.
 
-The observability work from Chapter 4 has paid off.
+The event and reliability work from Chapter 3 has paid off.
 
 An operator can begin with a shipment ID and follow the business journey.
 
@@ -999,7 +999,7 @@ production
 
 That supports both security and operational traceability.
 
-The release version we used in Chapter 4 should point back to a specific artifact and source state.
+The deployment release context should point back to a specific artifact and source state.
 
 ### SBOM
 
@@ -1451,7 +1451,7 @@ Sensitive planes remain separate.
 
 And when something is compromised, the architecture limits what that compromise can reach.
 
-In Chapter 6, the conversation changes again.
+In Chapter 5, the conversation changes again.
 
 By now, almost every design choice sounds desirable.
 

@@ -49,4 +49,13 @@ powershell -ExecutionPolicy Bypass -File tools/publish_review.ps1
 
 The command generates the root DOCX from the authoritative review Markdown, converts it directly with LibreOffice's console launcher (`soffice.com`), rasterizes every PDF page, and verifies the page sequence and image output. Generated QA artifacts are written beneath `.build/review/` and are ignored by Git. A successful machine check does not replace the required visual inspection of every page.
 
-The narrated teaching edition includes [Chapter 1](course/chapter-01-business-problem.md), [Chapter 2](course/chapter-02-following-a-shipment.md), and [Chapter 3](course/chapter-03-events-and-reliability.md). The reusable template is available at [Chapter 3 template](course/chapter-03-template.md).
+The narrated teaching edition includes:
+- [Chapter 1 — The Business Problem](course/chapter-01-business-problem.md)
+- [Chapter 2 — Following a Shipment](course/chapter-02-following-a-shipment.md)
+- [Chapter 3 — The Shipment Leaves a Message](course/chapter-03-events-and-reliability.md)
+- [Chapter 4 — Security](course/chapter-04-security.md)
+- [Chapter 5 — Architectural Tradeoffs](course/chapter-05-tradeoffs.md)
+- [Chapter 6 — Failure Is Part of the Architecture](course/chapter-06-failure-is-part-of-the-architecture.md)
+- [Chapter 7 — Observability: Understanding a Running System](course/chapter-07-observability-understanding-a-running-system.md)
+- [Chapter 8 — Evolutionary Architecture](course/chapter-08-evolutionary-architecture.md)
+- [Chapter 9 — The Architect's Method](course/chapter-09-the-architects-method.md)

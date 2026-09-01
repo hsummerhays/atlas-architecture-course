@@ -1,4 +1,4 @@
-# Chapter 6 — Architectural Tradeoffs
+# Chapter 5 — Architectural Tradeoffs
 
 The most difficult architectural decisions rarely involve choosing between a good solution and a bad one. They involve choosing between several reasonable solutions, each of which optimizes for something different.
 
@@ -16,7 +16,7 @@ That question applies whether we are discussing abstraction, distributed systems
 
 ---
 
-## 6.1 Simplicity Versus Flexibility
+## 5.1 Simplicity Versus Flexibility
 
 Software tends to begin concrete.
 
@@ -126,7 +126,7 @@ This distinction is central to good architecture.
 
 ---
 
-## 6.2 Consistency Versus Availability
+## 5.2 Consistency Versus Availability
 
 Distributed systems introduce a problem that does not exist in quite the same form inside a single process.
 
@@ -230,7 +230,7 @@ It is a **business behavior**.
 
 ---
 
-## 6.3 Performance Versus Reliability
+## 5.3 Performance Versus Reliability
 
 Imagine an external carrier API occasionally responds slowly.
 
@@ -322,7 +322,7 @@ That distinction becomes increasingly important as systems become distributed.
 
 ---
 
-## 6.4 Delivery Speed Versus Operational Safety
+## 5.4 Delivery Speed Versus Operational Safety
 
 Modern development practices make software remarkably easy to deploy.
 
@@ -416,7 +416,7 @@ Done correctly, it can improve safety.
 
 ---
 
-## 6.5 Duplication Versus Coupling
+## 5.5 Duplication Versus Coupling
 
 Software engineering correctly teaches developers to avoid unnecessary duplication.
 
@@ -466,7 +466,7 @@ The independence does not.
 
 ---
 
-## 6.6 Synchronous Versus Asynchronous Communication
+## 5.6 Synchronous Versus Asynchronous Communication
 
 A synchronous call is wonderfully simple.
 
@@ -521,7 +521,7 @@ Many enterprise systems appropriately use both.
 
 ---
 
-## 6.7 Build Versus Buy
+## 5.7 Build Versus Buy
 
 Every capability Atlas implements internally becomes something the organization owns.
 
@@ -577,7 +577,7 @@ Architecture includes knowing what **not** to build.
 
 ---
 
-## 6.8 Portability Versus Cloud-Native Capability
+## 5.8 Portability Versus Cloud-Native Capability
 
 Atlas can be designed to minimize dependency on a particular cloud provider.
 
@@ -623,7 +623,7 @@ That gives the system room to evolve without forcing it into a fictional lowest-
 
 ---
 
-## 6.9 The Architecture Decision Record
+## 5.9 The Architecture Decision Record
 
 Tradeoffs become dangerous when their reasoning disappears.
 
@@ -679,7 +679,7 @@ It explains why its advantages were worth its costs.
 
 ---
 
-## 6.10 Architecture as the Management of Constraints
+## 5.10 Architecture as the Management of Constraints
 
 This brings us to a broader definition of architecture.
 
@@ -729,7 +729,7 @@ The boxes merely show where it ended up.
 
 ---
 
-## 6.11 The Senior Engineer's Question
+## 5.11 The Senior Engineer's Question
 
 A less experienced engineer may encounter a design and ask:
 

@@ -39,20 +39,12 @@ Use **canonical shipment model** as the preferred Atlas-specific term. Use **can
 - **Chapter 1 — The Business Problem** — Finding the Domain Before Choosing the Framework
 - **Chapter 2 — Following a Shipment** — Responsibility, Dependency Direction, and the Request Path
 - **Chapter 3 — The Shipment Leaves a Message** — Events, Asynchronous Reactions, and Reliable Publication
-- **Chapter 4 — Observability** — Making Atlas Explain Its Behavior
-- **Chapter 5 — Security** — Identity, Authority, Data Protection, and Supply-Chain Boundaries
-- **Chapter 6 — Architectural Tradeoffs** — Part 1 — Simplicity Versus Flexibility
-- **Chapter 6 — Architectural Tradeoffs** — Part 2 — Consistency Versus Availability
-- **Chapter 6 — Architectural Tradeoffs** — Part 3 — Performance Versus Reliability
-- **Chapter 6 — Architectural Tradeoffs** — Part 4 — Delivery Speed Versus Operational Safety
-- **Chapter 7 — Evolutionary Architecture** — Part 1 — Architecture That Can Detect Its Own Decay
-- **Chapter 7 — Evolutionary Architecture** — Part 2 — Safe Evolution
-- **Chapter 7 — Evolutionary Architecture** — Part 3 — Architecture Ownership
-- **Chapter 7 — Evolutionary Architecture** — Part 4 — Architecture Decision Records
-- **Chapter 8 — The Architect’s Method** — Part 1 — Begin With the Problem, Not the Technology
-- **Chapter 8 — The Architect’s Method** — Part 2 — From Model to Blueprint
-- **Chapter 8 — The Architect’s Method** — Part 3 — Architecture in Practice
-- **Chapter 8 — The Architect’s Method** — Part 4 — Communicating Architecture
+- **Chapter 4 — Security** — Identity, Authority, Data Protection, and Supply-Chain Boundaries
+- **Chapter 5 — Architectural Tradeoffs** — Evaluating Options, Sacrifices, and Reversibility
+- **Chapter 6 — Failure Is Part of the Architecture** — Resilience, Fault Isolation, and Distributed Failure Modes
+- **Chapter 7 — Observability: Understanding a Running System** — Making Atlas Explain Its Behavior
+- **Chapter 8 — Evolutionary Architecture** — Fitness Functions, Safe Evolution, and Architecture Ownership
+- **Chapter 9 — The Architect’s Method** — From Problem and Blueprint to Practice and Communication
 
 ---
 # Chapter 1 — The Business Problem
