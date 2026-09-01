@@ -1,20 +1,37 @@
 # Chapter 5 — Architectural Tradeoffs
 
-The most difficult architectural decisions rarely involve choosing between a good solution and a bad one. They involve choosing between several reasonable solutions, each of which optimizes for something different.
+## Evaluating Options, Sacrifices, and Reversibility
 
-That is an important distinction.
+**Estimated listening time:** 20–24 minutes  
+**Primary evidence label:** Teaching example  
+**Teaching-chapter status:** Draft  
+**Reference implementation:** Atlas Enterprise Platform
 
-Architecture is not the process of discovering the universally correct design. It is the process of deciding which properties matter most for a particular system, understanding what must be sacrificed to obtain those properties, and making those decisions deliberately.
+## What You Will Learn
 
-Atlas provides a useful environment for examining these choices because many of its design decisions are intentionally representative of enterprise systems rather than optimized for a single application.
+By the end of this chapter, you should be able to:
 
-The recurring question throughout this chapter is therefore:
+- Explain why architecture is a discipline of deliberate tradeoffs rather than discovering universal designs.
+- Frame architectural choices around the question: "What are we buying, and what are we paying for it?"
+- Evaluate the cost of abstraction versus concrete simplicity.
+- Balance immediate consistency against system availability using eventual consistency and transactional outboxes.
+- Protect shared capacity by bounding deadlines, concurrency, and retries.
+- Distinguish code duplication from knowledge duplication to avoid accidental coupling.
+- Make architectural choices visible, deliberate, and reversible where practical.
 
-> **What are we buying, and what are we paying for it?**
+## Evidence Guide
 
-That question applies whether we are discussing abstraction, distributed systems, persistence, messaging, deployment, resilience, or cloud infrastructure.
+This chapter establishes general architectural reasoning applied across Atlas.
+
+- **Implemented** — Behavior demonstrable in the Atlas reference implementation.
+- **Current architecture** — A description linked to an authoritative current-state artifact.
+- **Planned direction** — An intended change whose completion criteria or trigger is stated.
+- **Teaching example** — A concrete scenario used to explain a design decision.
+- **Conceptual extension** — A possible evolution used to explore a tradeoff, not a committed roadmap item.
 
 ---
+
+## Narration
 
 ## 5.1 Simplicity Versus Flexibility
 
@@ -798,3 +815,9 @@ And perhaps most importantly:
 > **What are we buying, and what are we paying for it?**
 
 That is the discipline behind architectural tradeoffs—and one of the foundations of engineering mature systems.
+
+### What's Next?
+
+Understanding tradeoffs between consistency, availability, and simplicity leads directly to the ultimate stress test of any design: how the system behaves when components, networks, and providers inevitably fail.
+
+In **Chapter 6 — Failure Is Part of the Architecture**, we move from theoretical tradeoffs to operational reality, exploring fault containment, retry budgets, circuit breakers, and building systems that degrade gracefully without cascading collapse.

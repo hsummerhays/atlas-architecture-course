@@ -1,40 +1,36 @@
 # Chapter 8 — Evolutionary Architecture
 
-Architecture is often drawn as if it were permanent.
+## Fitness Functions, Safe Evolution, and Architecture Ownership
 
-Boxes are placed on a diagram. Boundaries are named. Services are assigned responsibilities. Databases are selected. Interfaces are defined.
+**Estimated listening time:** 22–26 minutes  
+**Primary evidence label:** Teaching example  
+**Teaching-chapter status:** Draft  
+**Reference implementation:** Atlas Enterprise Platform
 
-The resulting picture can create an illusion:
+## What You Will Learn
 
-```text
-Design architecture
-       ↓
-Build system
-       ↓
-Architecture complete
-```
+By the end of this chapter, you should be able to:
 
-Real systems do not behave that way.
+- Distinguish intended architecture from actual system decay and dependency drift.
+- Implement automated architectural fitness functions using static analysis, dependency tests, and contract verification.
+- Execute safe parallel migrations using the expand-and-contract and strangler application patterns.
+- Manage backward and forward schema compatibility across APIs, events, and databases.
+- Establish clear ownership boundaries for domains, services, contracts, operational health, and retirement.
+- Document high-impact architectural decisions and review triggers using Architecture Decision Records (ADRs).
 
-Businesses change.
+## Evidence Guide
 
-Teams change.
+This chapter examines evolutionary controls, fitness functions, and governance in Atlas.
 
-Traffic changes.
+- **Implemented** — Behavior demonstrable in the Atlas reference implementation.
+- **Current architecture** — A description linked to an authoritative current-state artifact.
+- **Planned direction** — An intended change whose completion criteria or trigger is stated.
+- **Teaching example** — A concrete scenario used to explain a design decision.
+- **Conceptual extension** — A possible evolution used to explore a tradeoff, not a committed roadmap item.
 
-Regulations change.
+---
 
-Vendors change.
-
-Cloud platforms change.
-
-Frameworks change.
-
-The assumptions that made yesterday's architecture reasonable may no longer be true tomorrow.
-
-Atlas therefore needs more than a good architecture.
-
-It needs an architecture that can **evolve without losing its integrity**.
+## Narration
 
 That changes the architectural question from:
 
@@ -1833,8 +1829,8 @@ The central principle of this chapter is therefore:
 
 That is evolutionary architecture.
 
-And it prepares us for the final question of the course:
+### What's Next?
 
-> **How does an architect actually approach a problem and turn uncertainty into a workable system design?**
+Having explored how to model domains, isolate variation, handle asynchronous reliability, enforce security, balance tradeoffs, contain failure, instrument telemetry, and guide architectural evolution, we arrive at the capstone question: how does an architect synthesize all of these practices into a coherent, repeatable design method?
 
-That is the subject of Chapter 9 — **The Architect's Method**.
+In **Chapter 9 — The Architect's Method**, we bring the complete discipline together, walking through problem framing, blueprint creation, vertical-slice execution, production validation, and executive/team communication.

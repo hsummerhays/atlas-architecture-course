@@ -1451,35 +1451,11 @@ Sensitive planes remain separate.
 
 And when something is compromised, the architecture limits what that compromise can reach.
 
-In Chapter 5, the conversation changes again.
+### What's Next?
 
-By now, almost every design choice sounds desirable.
+We want security, reliability, high performance, rich flexibility, strong consistency, high availability, and rapid delivery speed. But in production systems, these qualities constantly pull in opposing directions.
 
-We want security.
-
-We want reliability.
-
-We want performance.
-
-We want simplicity.
-
-We want flexibility.
-
-We want consistency.
-
-We want availability.
-
-We want fast delivery.
-
-We want safe delivery.
-
-But we cannot maximize all of them simultaneously.
-
-Architecture is where those tensions become decisions.
-
-Next, we will begin with one of the most persistent:
-
-> How much flexibility should we pay for before we actually need it?
+In **Chapter 5 — Architectural Tradeoffs**, we explore how to evaluate competing engineering desires deliberately, asking at every step: *What are we buying, and what are we paying for it?*
 
 **Narrated-edition note:** The narration ends here. Editorial Alignment, Engineering Commentary, Interview Stops, the review exercise, checklists, and the editorial record remain in Markdown as review and instructor material and may be excluded from the narrated edition.
 

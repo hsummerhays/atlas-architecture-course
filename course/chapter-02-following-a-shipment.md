@@ -386,11 +386,11 @@ Atlas state is persisted
 An Atlas response returns to the client
 ```
 
-No single component did everything.
+### What's Next?
 
-That is not accidental ceremony. It is the result of placing each decision with the component that knows enough to make it and isolating responsibilities that change for different reasons.
+Once the synchronous request path is complete and truthful state is persisted, the next challenge is notifying the rest of the business without coupling booking availability to downstream reactions.
 
-In Chapter 3, the saved shipment will leave a message. We will ask how downstream work can react without delaying booking, how Atlas avoids losing an event between the database and the broker, and why duplicate delivery is something to design for rather than deny.
+In **Chapter 3 — The Shipment Leaves a Message**, we explore event-driven architecture, durable transactional outboxes, fan-out messaging, and how consumers achieve idempotent reliability under at-least-once delivery.
 
 ---
 

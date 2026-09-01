@@ -1,32 +1,36 @@
 # Chapter 6 — Failure Is Part of the Architecture
 
-One of the easiest mistakes in software architecture is designing primarily for the successful path.
+## Resilience, Fault Isolation, and Distributed Failure Modes
 
-A request arrives. The service processes it. The database commits. A message is published. Another service consumes it. An external provider responds successfully.
+**Estimated listening time:** 22–26 minutes  
+**Primary evidence label:** Teaching example  
+**Teaching-chapter status:** Draft  
+**Reference implementation:** Atlas Enterprise Platform
 
-Everything works.
+## What You Will Learn
 
-Real systems are defined just as much by what happens when those assumptions stop being true.
+By the end of this chapter, you should be able to:
 
-Networks become unavailable. Requests time out. Containers restart. Credentials expire. Databases become overloaded. Messages arrive twice. Consumers crash after partially completing work. External providers throttle traffic. Deployments introduce defects. Entire cloud regions can become unavailable.
+- Treat failure modes as normal characteristics of distributed architecture rather than exceptional anomalies.
+- Design systems to contain and isolate failure across process, network, and provider boundaries.
+- Distinguish transient failures from terminal failures and apply appropriate retry budgets and backoff strategies.
+- Prevent retry storms, cascading overload, and resource exhaustion using circuit breakers, bulkheads, and timeouts.
+- Preserve business integrity across partial failures and ambiguous downstream outcomes.
+- Apply the principle: "A dependency is not fully designed until its failure behavior is understood."
 
-These events are not exceptional in the sense that they are surprising.
+## Evidence Guide
 
-They are normal characteristics of distributed computing.
+This chapter examines resilience and failure containment across Atlas.
 
-A mature architecture therefore asks a different question.
-
-Not:
-
-> **How do we prevent failure?**
-
-But:
-
-> **How does the system behave when failure occurs?**
-
-Atlas treats failure handling as part of the architecture rather than something added afterward.
+- **Implemented** — Behavior demonstrable in the Atlas reference implementation.
+- **Current architecture** — A description linked to an authoritative current-state artifact.
+- **Planned direction** — An intended change whose completion criteria or trigger is stated.
+- **Teaching example** — A concrete scenario used to explain a design decision.
+- **Conceptual extension** — A possible evolution used to explore a tradeoff, not a committed roadmap item.
 
 ---
+
+## Narration
 
 ## 6.1 From Error Handling to Resilience
 
@@ -1379,3 +1383,9 @@ It is constructing a system in which they can happen **without becoming catastro
 That is resilience.
 
 And resilience is architecture.
+
+### What's Next?
+
+Designing systems to contain and survive failure is only half the battle. When failures occur across asynchronous boundaries and external integrations, how do operators actually discover what went wrong?
+
+In **Chapter 7 — Observability: Understanding a Running System**, we explore how to make Atlas explain its behavior through correlation contexts, distributed traces, golden signal metrics, SLIs/SLOs, and actionable production telemetry.

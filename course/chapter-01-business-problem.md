@@ -267,15 +267,11 @@ External carriers remain independent systems with their own authority and failur
 
 Good architecture does not erase those boundaries. It makes them visible and manageable.
 
-That is the foundation for everything that follows.
+### What's Next?
 
-In Chapter 2, we will return to Tuesday morning and follow the request after the customer clicks **Book Shipment**. We will watch identity become established, authorization protect the business boundary, application logic coordinate the use case, and the selected adapter communicate with a carrier.
+Now that the business problem and domain boundary are established, the next question is how a real request moves through that architecture without blurring responsibilities. 
 
-But remember where the story began.
-
-Not with a framework.
-
-With a customer who needed one reliable way to book a shipment in a world where every carrier speaks a different language.
+In **Chapter 2 — Following a Shipment**, we follow a single booking request across the network boundary, watching authentication, tenant authorization, application coordination, and carrier adapters collaborate without any single component absorbing the entire workflow.
 
 ---
 

@@ -367,11 +367,11 @@ Reconciliation checks that business outcomes converge
 
 The network is not atomic. The design does not pretend otherwise.
 
-Atlas preserves one authoritative local fact and one durable publication intent. Each consumer then owns the correctness of its reaction. Publication and delivery may repeat, so effects are idempotent and convergence is measured.
+### What's Next?
 
-The shipment left a message, but the message is valuable only because its meaning, ownership, and recovery path are explicit.
+With reliable request processing and asynchronous event distribution in place, we must confront the reality that distributed systems operate in hostile environments with multiple tenants, external credentials, and automation workflows.
 
-In Chapter 4, we will examine identity, authority, data protection, and supply-chain boundaries across the synchronous and asynchronous pathways of Atlas.
+In **Chapter 4 — Security**, we examine identity, authority, data protection, secret management, and supply-chain boundaries across both shipping operations and engineering agent pipelines.
 
 **Narrated-edition note:** The narration ends here. Editorial Alignment, Engineering Commentary, Interview Stops, the review exercise, checklists, and the editorial record remain in Markdown as review and instructor material and may be excluded from the narrated edition.
 

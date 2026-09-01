@@ -1,24 +1,36 @@
 # Chapter 9 — The Architect's Method
 
-Architecture can appear mysterious when viewed only through finished diagrams.
+## From Problem and Blueprint to Practice and Communication
 
-A polished architecture diagram shows:
+**Estimated listening time:** 25–30 minutes  
+**Primary evidence label:** Teaching example  
+**Teaching-chapter status:** Draft  
+**Reference implementation:** Atlas Enterprise Platform
 
-```text
-Clients
-   ↓
-API Gateway
-   ↓
-Services
-   ↓
-Databases
-   ↓
-Message Broker
-   ↓
-External Systems
-```
+## What You Will Learn
 
-What it does not show is the reasoning that produced those boxes and arrows.
+By the end of this chapter, you should be able to:
+
+- Apply a structured architectural method that begins with the business problem, actors, journeys, and constraints.
+- Translate domain models, invariants, and quality-attribute scenarios into an executable architectural blueprint.
+- Build walking skeletons and thin vertical slices to validate high-risk architectural assumptions early.
+- Test architectural hypotheses against real production evidence and operational feedback.
+- Tailor architecture communication and progressive disclosure to executives, product managers, engineers, and operators.
+- Articulate clear architectural decisions, tradeoffs, and non-negotiables in both engineering reviews and technical interviews.
+
+## Evidence Guide
+
+This chapter synthesizes the complete architect's method across the lifecycle of Atlas.
+
+- **Implemented** — Behavior demonstrable in the Atlas reference implementation.
+- **Current architecture** — A description linked to an authoritative current-state artifact.
+- **Planned direction** — An intended change whose completion criteria or trigger is stated.
+- **Teaching example** — A concrete scenario used to explain a design decision.
+- **Conceptual extension** — A possible evolution used to explore a tradeoff, not a committed roadmap item.
+
+---
+
+## Narration
 
 Why is this a service?
 

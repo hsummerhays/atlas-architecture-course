@@ -1,36 +1,36 @@
 # Chapter 7 — Observability: Understanding a Running System
 
-A system can be correct in source code and still be incomprehensible in production.
+## Making Atlas Explain Its Behavior
 
-Atlas may compile successfully. Unit tests may pass. Containers may start. Health checks may report success. Requests may even appear to work.
+**Estimated listening time:** 24–28 minutes  
+**Primary evidence label:** Teaching example  
+**Teaching-chapter status:** Draft  
+**Reference implementation:** Atlas Enterprise Platform
 
-Then a customer reports:
+## What You Will Learn
 
-> "Something is slow."
+By the end of this chapter, you should be able to:
 
-That sentence can describe dozens of different problems.
+- Explain why observability begins with operational questions rather than logging tools.
+- Distinguish structured logs, metrics, traces, and business telemetry by the questions they answer.
+- Propagate correlation, causation, tenant, and shipment context across synchronous and asynchronous paths.
+- Define meaningful Service Level Indicators (SLIs) and Service Level Objectives (SLOs) that reflect actual business health.
+- Use golden signals, RED, and USE methods to detect and diagnose degradation before catastrophic outage.
+- Design alert policies and runbooks that give operators actionable evidence during production incidents.
 
-Is the API slow?
+## Evidence Guide
 
-Is the database slow?
+This chapter examines telemetry, diagnostic context, and operational interfaces in Atlas.
 
-Is a carrier API slow?
+- **Implemented** — Behavior demonstrable in the Atlas reference implementation.
+- **Current architecture** — A description linked to an authoritative current-state artifact.
+- **Planned direction** — An intended change whose completion criteria or trigger is stated.
+- **Teaching example** — A concrete scenario used to explain a design decision.
+- **Conceptual extension** — A possible evolution used to explore a tradeoff, not a committed roadmap item.
 
-Are requests waiting behind a concurrency limit?
+---
 
-Is a queue building backlog?
-
-Are retries hiding transient failures?
-
-Is one tenant generating unusual traffic?
-
-Did a deployment change behavior?
-
-Is the problem occurring everywhere or only in one region?
-
-Without observability, answering those questions becomes guesswork.
-
-Observability is the ability to understand the internal behavior of a system by examining the signals it produces.
+## Narration
 
 For Atlas, those signals primarily include:
 
@@ -1817,3 +1817,9 @@ Without that ability, engineers operate through inference and intuition.
 With it, they operate through evidence.
 
 And as Atlas grows across services, queues, databases, providers, containers, tenants, and clouds, that evidence becomes one of the most important architectural capabilities the platform possesses.
+
+### What's Next?
+
+With comprehensive observability and production feedback in place, we can confront the reality of long-lived enterprise software: systems cannot remain static. 
+
+In **Chapter 8 — Evolutionary Architecture**, we explore how to guide architectural change safely over time using automated fitness functions, expand-and-contract migrations, strangler patterns, and Architecture Decision Records (ADRs).
