@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 520" width="100%" height="100%">
+  <defs>
+    <style>
+      .bg { fill: #0f172a; }
+      .db-box { fill: #1e1b4b; stroke: #818cf8; stroke-width: 2; rx: 8; }
+      .pub-box { fill: #1e293b; stroke: #38bdf8; stroke-width: 2; rx: 8; }
+      .broker-box { fill: #312e81; stroke: #c084fc; stroke-width: 2; rx: 8; }
+      .sub-box { fill: #1e293b; stroke: #34d399; stroke-width: 2; rx: 8; }
+      .dlq-box { fill: #450a0a; stroke: #f87171; stroke-width: 2; rx: 8; }
+      .text-title { fill: #f8fafc; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 14px; font-weight: bold; text-anchor: middle; }
+      .text-sub { fill: #94a3b8; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 11px; text-anchor: middle; }
+      .text-header { fill: #38bdf8; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 20px; font-weight: bold; }
+      .arrow { stroke: #64748b; stroke-width: 2; marker-end: url(#arrowhead); }
+      .tx-boundary { stroke: #818cf8; stroke-width: 2; stroke-dasharray: 6,6; fill: none; }
+    </style>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#64748b" />
+    </marker>
+  </defs>
+
+  <rect width="100%" height="100%" class="bg" />
+  
+  <text x="40" y="45" class="text-header">Transactional Outbox &amp; Idempotent Messaging Flow</text>
+  <text x="40" y="70" class="text-sub" style="text-anchor: start;">Guaranteed event publication, topic fan-out, consumer inbox deduplication, and DLQ containment</text>
+
+  <!-- Atomic Transaction Boundary -->
+  <rect x="40" y="110" width="220" height="240" class="tx-boundary" rx="12" />
+  <text x="50" y="130" class="text-sub" style="fill: #818cf8; font-weight: bold; text-anchor: start;">Atomic DB Transaction</text>
+
+  <g transform="translate(60, 150)">
+    <rect width="180" height="80" class="db-box" />
+    <text x="90" y="35" class="text-title">Shipments Table</text>
+    <text x="90" y="58" class="text-sub">State: BOOKED</text>
+  </g>
+
+  <g transform="translate(60, 250)">
+    <rect width="180" height="80" class="db-box" />
+    <text x="90" y="35" class="text-title">Outbox Table</text>
+    <text x="90" y="58" class="text-sub">Event: ShipmentBooked</text>
+  </g>
+
+  <!-- Outbox Publisher -->
+  <g transform="translate(300, 200)">
+    <rect width="150" height="100" class="pub-box" />
+    <text x="75" y="38" class="text-title">Outbox Publisher</text>
+    <text x="75" y="60" class="text-sub">Poll / Change-Feed</text>
+    <text x="75" y="78" class="text-sub">Durable Dispatch</text>
+  </g>
+
+  <!-- Message Broker (Topic & Fanout) -->
+  <g transform="translate(490, 160)">
+    <rect width="170" height="180" class="broker-box" />
+    <text x="85" y="35" class="text-title" style="fill: #e9d5ff;">Message Topic</text>
+    <text x="85" y="55" class="text-sub" style="fill: #c084fc;">(e.g., SNS Topic)</text>
+    <line x1="20" y1="75" x2="150" y2="75" stroke="#6d28d9" stroke-width="1" />
+    <text x="85" y="105" class="text-title" style="font-size: 12px;">Dedicated Queues</text>
+    <text x="85" y="125" class="text-sub">Queue: Tracking</text>
+    <text x="85" y="145" class="text-sub">Queue: Accounting</text>
+    <text x="85" y="165" class="text-sub">Queue: Notifications</text>
+  </g>
+
+  <!-- Consumer with Inbox -->
+  <g transform="translate(700, 120)">
+    <rect width="210" height="130" class="sub-box" />
+    <text x="105" y="30" class="text-title">Independent Consumer</text>
+    <text x="105" y="52" class="text-sub">Idempotent Consumer Inbox</text>
+    <text x="105" y="72" class="text-sub">Local Business Effect</text>
+    <text x="105" y="92" class="text-sub">Atomic State + Message ID</text>
+    <text x="105" y="112" class="text-sub">(De-duplicates Redeliveries)</text>
+  </g>
+
+  <!-- Dead-Letter Queue -->
+  <g transform="translate(700, 290)">
+    <rect width="210" height="90" class="dlq-box" />
+    <text x="105" y="35" class="text-title" style="fill: #fca5a5;">Dead-Letter Queue</text>
+    <text x="105" y="58" class="text-sub">Retains Terminal Failures</text>
+    <text x="105" y="76" class="text-sub">Alerting &amp; Manual Recovery</text>
+  </g>
+
+  <!-- Connectors -->
+  <line x1="240" y1="290" x2="300" y2="250" class="arrow" />
+  <line x1="450" y1="250" x2="490" y2="250" class="arrow" />
+  <line x1="660" y1="210" x2="700" y2="185" class="arrow" />
+  <path d="M 660,270 L 680,270 L 680,335 L 700,335" fill="none" stroke="#f87171" stroke-width="2" marker-end="url(#arrowhead-red)" />
+  <defs>
+    <marker id="arrowhead-red" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#f87171" />
+    </marker>
+  </defs>
+</svg>

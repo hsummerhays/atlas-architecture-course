@@ -2250,4 +2250,6 @@ Not to predict every future requirement.
 
 Architecture exists to make important decisions explicit so that a system can serve the business today, survive failure, remain understandable, and change responsibly tomorrow.
 
+![The Architect's Method Process Flow](../diagrams/architects-method.svg)
+
 That is the architect's method.

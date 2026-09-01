@@ -816,6 +816,8 @@ And perhaps most importantly:
 
 That is the discipline behind architectural tradeoffs—and one of the foundations of engineering mature systems.
 
+![Architectural Tradeoff Map](../diagrams/architecture-tradeoff-map.svg)
+
 ### What's Next?
 
 Understanding tradeoffs between consistency, availability, and simplicity leads directly to the ultimate stress test of any design: how the system behaves when components, networks, and providers inevitably fail.

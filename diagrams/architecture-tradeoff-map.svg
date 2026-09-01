@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 520" width="100%" height="100%">
+  <defs>
+    <style>
+      .bg { fill: #0f172a; }
+      .card { fill: #1e293b; stroke: #38bdf8; stroke-width: 2; rx: 8; }
+      .text-title { fill: #f8fafc; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 15px; font-weight: bold; text-anchor: middle; }
+      .text-sub { fill: #94a3b8; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 11.5px; }
+      .text-gain { fill: #34d399; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 12px; font-weight: bold; }
+      .text-cost { fill: #f87171; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 12px; font-weight: bold; }
+      .text-header { fill: #38bdf8; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 20px; font-weight: bold; }
+    </style>
+  </defs>
+
+  <rect width="100%" height="100%" class="bg" />
+  
+  <text x="40" y="45" class="text-header">Architectural Tradeoff Map</text>
+  <text x="40" y="70" class="text-sub" style="font-size: 13px;">Evaluating competing quality attributes: "What are we buying, and what are we paying for it?"</text>
+
+  <!-- Tradeoff 1 -->
+  <g transform="translate(40, 110)">
+    <rect width="420" height="160" class="card" />
+    <text x="210" y="32" class="text-title">1. Simplicity vs. Flexibility</text>
+    <text x="20" y="65" class="text-gain">+ What we buy:</text>
+    <text x="130" y="65" class="text-sub">Carrier adapters allow adding providers without editing core logic.</text>
+    <text x="20" y="95" class="text-cost">- What we pay:</text>
+    <text x="130" y="95" class="text-sub">Indirection, mapping layers, and interface maintenance overhead.</text>
+    <text x="20" y="130" class="text-sub" style="fill: #e2e8f0; font-style: italic;">Atlas Rule: Introduce abstraction only for demonstrated carrier variation.</text>
+  </g>
+
+  <!-- Tradeoff 2 -->
+  <g transform="translate(500, 110)">
+    <rect width="420" height="160" class="card" />
+    <text x="210" y="32" class="text-title">2. Consistency vs. Availability</text>
+    <text x="20" y="65" class="text-gain">+ What we buy:</text>
+    <text x="130" y="65" class="text-sub">Transactional outbox guarantees booking succeeds if broker is down.</text>
+    <text x="20" y="95" class="text-cost">- What we pay:</text>
+    <text x="130" y="95" class="text-sub">Eventual consistency; downstream reactions must tolerate delay.</text>
+    <text x="20" y="130" class="text-sub" style="fill: #e2e8f0; font-style: italic;">Atlas Rule: Immediate consistency for booking fact; bounded convergence downstream.</text>
+  </g>
+
+  <!-- Tradeoff 3 -->
+  <g transform="translate(40, 300)">
+    <rect width="420" height="160" class="card" />
+    <text x="210" y="32" class="text-title">3. Raw Speed vs. System Reliability</text>
+    <text x="20" y="65" class="text-gain">+ What we buy:</text>
+    <text x="130" y="65" class="text-sub">Timeouts, retries, and circuit breakers protect shared capacity.</text>
+    <text x="20" y="95" class="text-cost">- What we pay:</text>
+    <text x="130" y="95" class="text-sub">Early request fail-fast and timeout errors instead of waiting forever.</text>
+    <text x="20" y="130" class="text-sub" style="fill: #e2e8f0; font-style: italic;">Atlas Rule: Bound all external work; prevent retry amplification storms.</text>
+  </g>
+
+  <!-- Tradeoff 4 -->
+  <g transform="translate(500, 300)">
+    <rect width="420" height="160" class="card" />
+    <text x="210" y="32" class="text-title">4. Delivery Speed vs. Operational Safety</text>
+    <text x="20" y="65" class="text-gain">+ What we buy:</text>
+    <text x="130" y="65" class="text-sub">Automated fitness tests, small batches, and non-self-approving gates.</text>
+    <text x="20" y="95" class="text-cost">- What we pay:</text>
+    <text x="130" y="95" class="text-sub">Staged deployment pipelines and mandatory peer reviews.</text>
+    <text x="20" y="130" class="text-sub" style="fill: #e2e8f0; font-style: italic;">Atlas Rule: Release small, immutable artifacts progressively with clear abort criteria.</text>
+  </g>
+</svg>

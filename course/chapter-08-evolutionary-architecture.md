@@ -1829,6 +1829,10 @@ The central principle of this chapter is therefore:
 
 That is evolutionary architecture.
 
+![Evolutionary Architecture Feedback Loop](../diagrams/evolutionary-architecture-loop.svg)
+
+*(Related Decision: [ADR-0008 — Automated Architectural Fitness Functions in CI/CD](../adr-examples/ADR-0008-architectural-fitness-functions.md))*
+
 ### What's Next?
 
 Having explored how to model domains, isolate variation, handle asynchronous reliability, enforce security, balance tradeoffs, contain failure, instrument telemetry, and guide architectural evolution, we arrive at the capstone question: how does an architect synthesize all of these practices into a coherent, repeatable design method?

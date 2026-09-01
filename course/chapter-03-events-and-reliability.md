@@ -365,6 +365,10 @@ DLQs retain terminal failures for owned recovery
 Reconciliation checks that business outcomes converge
 ```
 
+![Transactional Outbox & Message Flow](../diagrams/outbox-message-flow.svg)
+
+*(Related Decisions: [ADR-0003 — Transactional Outbox](../adr-examples/ADR-0003-transactional-outbox.md) | [ADR-0004 — Idempotent Message Consumption](../adr-examples/ADR-0004-idempotent-message-consumption.md))*
+
 The network is not atomic. The design does not pretend otherwise.
 
 ### What's Next?

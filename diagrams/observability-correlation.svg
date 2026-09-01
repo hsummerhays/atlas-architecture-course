@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 520" width="100%" height="100%">
+  <defs>
+    <style>
+      .bg { fill: #0f172a; }
+      .box { fill: #1e293b; stroke: #38bdf8; stroke-width: 2; rx: 8; }
+      .ctx-box { fill: #1e1b4b; stroke: #a855f7; stroke-width: 2; rx: 8; }
+      .text-title { fill: #f8fafc; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 14px; font-weight: bold; text-anchor: middle; }
+      .text-sub { fill: #94a3b8; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 11px; text-anchor: middle; }
+      .text-header { fill: #38bdf8; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 20px; font-weight: bold; }
+      .text-ctx { fill: #c084fc; font-family: monospace; font-size: 11px; text-anchor: middle; }
+      .arrow { stroke: #a855f7; stroke-width: 2; marker-end: url(#arrowhead-purple); }
+    </style>
+    <marker id="arrowhead-purple" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#a855f7" />
+    </marker>
+  </defs>
+
+  <rect width="100%" height="100%" class="bg" />
+  
+  <text x="40" y="45" class="text-header">Observability Context &amp; Trace Propagation</text>
+  <text x="40" y="70" class="text-sub" style="text-anchor: start;">Distributed Trace Context, Correlation ID, Causation ID, and Tenant Context across Sync and Async boundaries</text>
+
+  <!-- Step 1: HTTP Entry -->
+  <g transform="translate(40, 120)">
+    <rect width="200" height="150" class="box" />
+    <text x="100" y="30" class="text-title">1. Inbound Request</text>
+    <text x="100" y="52" class="text-sub">POST /api/v1/shipments</text>
+    <line x1="20" y1="65" x2="180" y2="65" stroke="#334155" stroke-width="1" />
+    <text x="100" y="85" class="text-ctx">trace_id: 4bf92f35...</text>
+    <text x="100" y="105" class="text-ctx">span_id: 00f067aa...</text>
+    <text x="100" y="125" class="text-ctx">correlation_id: req-891a</text>
+    <text x="100" y="145" class="text-ctx">tenant_id: acme-corp</text>
+  </g>
+
+  <!-- Step 2: Service & DB Commit -->
+  <g transform="translate(280, 120)">
+    <rect width="200" height="150" class="box" />
+    <text x="100" y="30" class="text-title">2. Core Orchestrator</text>
+    <text x="100" y="52" class="text-sub">Atomic State + Outbox</text>
+    <line x1="20" y1="65" x2="180" y2="65" stroke="#334155" stroke-width="1" />
+    <text x="100" y="85" class="text-ctx">span_id: a12bc4ef...</text>
+    <text x="100" y="105" class="text-ctx">shipment_id: shp-7712</text>
+    <text x="100" y="125" class="text-ctx">carrier: fedex</text>
+    <text x="100" y="145" class="text-ctx">db_latency_ms: 14.2</text>
+  </g>
+
+  <!-- Step 3: Outbox Publisher to Queue -->
+  <g transform="translate(520, 120)">
+    <rect width="190" height="150" class="box" />
+    <text x="95" y="30" class="text-title">3. Async Message Header</text>
+    <text x="95" y="52" class="text-sub">SNS / SQS Event Envelope</text>
+    <line x1="20" y1="65" x2="170" y2="65" stroke="#334155" stroke-width="1" />
+    <text x="95" y="85" class="text-ctx">traceparent: 00-4bf9...</text>
+    <text x="95" y="105" class="text-ctx">causation_id: shp-7712</text>
+    <text x="95" y="125" class="text-ctx">event_id: evt-9902</text>
+    <text x="95" y="145" class="text-ctx">tenant_id: acme-corp</text>
+  </g>
+
+  <!-- Step 4: Downstream Worker -->
+  <g transform="translate(740, 120)">
+    <rect width="180" height="150" class="box" />
+    <text x="90" y="30" class="text-title">4. Event Consumer</text>
+    <text x="90" y="52" class="text-sub">Tracking Worker</text>
+    <line x1="20" y1="65" x2="160" y2="65" stroke="#334155" stroke-width="1" />
+    <text x="90" y="85" class="text-ctx">span_id: e890a1b2...</text>
+    <text x="90" y="105" class="text-ctx">queue_wait_ms: 42.0</text>
+    <text x="90" y="125" class="text-ctx">attempt: 1</text>
+    <text x="90" y="145" class="text-ctx">status: SUCCESS</text>
+  </g>
+
+  <!-- Trace Path Arrows -->
+  <line x1="240" y1="195" x2="280" y2="195" class="arrow" />
+  <line x1="480" y1="195" x2="520" y2="195" class="arrow" />
+  <line x1="710" y1="195" x2="740" y2="195" class="arrow" />
+
+  <!-- Summary Box -->
+  <g transform="translate(40, 310)">
+    <rect width="880" height="150" class="ctx-box" />
+    <text x="440" y="35" class="text-title" style="fill: #e9d5ff; font-size: 16px;">Production Telemetry Dimensions</text>
+    <text x="160" y="70" class="text-sub" style="font-weight: bold; fill: #38bdf8;">Structured Logs</text>
+    <text x="160" y="92" class="text-sub">JSON with Tenant ID,</text>
+    <text x="160" y="110" class="text-sub">Shipment ID, Trace ID</text>
+    
+    <text x="440" y="70" class="text-sub" style="font-weight: bold; fill: #34d399;">Golden Metrics</text>
+    <text x="440" y="92" class="text-sub">Rate, Errors, Duration,</text>
+    <text x="440" y="110" class="text-sub">Queue Lag, Saturation</text>
+
+    <text x="720" y="70" class="text-sub" style="font-weight: bold; fill: #f472b6;">Distributed Traces</text>
+    <text x="720" y="92" class="text-sub">End-to-End Latency &amp;</text>
+    <text x="720" y="110" class="text-sub">Cross-Boundary Causation</text>
+  </g>
+</svg>

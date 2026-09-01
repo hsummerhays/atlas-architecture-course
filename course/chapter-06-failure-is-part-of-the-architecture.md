@@ -1384,6 +1384,10 @@ That is resilience.
 
 And resilience is architecture.
 
+![Distributed Resilience & Fault Containment Flow](../diagrams/resilience-flow.svg)
+
+*(Related Decision: [ADR-0006 — Explicit Distributed Resilience Policies](../adr-examples/ADR-0006-explicit-resilience-policies.md))*
+
 ### What's Next?
 
 Designing systems to contain and survive failure is only half the battle. When failures occur across asynchronous boundaries and external integrations, how do operators actually discover what went wrong?

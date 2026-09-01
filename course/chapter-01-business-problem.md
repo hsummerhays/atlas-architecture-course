@@ -267,6 +267,10 @@ External carriers remain independent systems with their own authority and failur
 
 Good architecture does not erase those boundaries. It makes them visible and manageable.
 
+![Atlas System Context](../diagrams/atlas-system-context.svg)
+
+*(Related Decision: [ADR-0001 — Adopt Canonical Shipment Model](../adr-examples/ADR-0001-canonical-shipment-model.md))*
+
 ### What's Next?
 
 Now that the business problem and domain boundary are established, the next question is how a real request moves through that architecture without blurring responsibilities. 

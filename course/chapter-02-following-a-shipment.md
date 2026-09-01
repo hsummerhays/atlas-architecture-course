@@ -386,6 +386,10 @@ Atlas state is persisted
 An Atlas response returns to the client
 ```
 
+![Shipment Request Flow](../diagrams/shipment-request-flow.svg)
+
+*(Related Decision: [ADR-0002 — Isolate Carrier Integrations Behind Ports and Adapters](../adr-examples/ADR-0002-ports-and-adapters-for-providers.md))*
+
 ### What's Next?
 
 Once the synchronous request path is complete and truthful state is persisted, the next challenge is notifying the rest of the business without coupling booking availability to downstream reactions.

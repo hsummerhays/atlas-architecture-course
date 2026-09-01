@@ -1818,6 +1818,10 @@ With it, they operate through evidence.
 
 And as Atlas grows across services, queues, databases, providers, containers, tenants, and clouds, that evidence becomes one of the most important architectural capabilities the platform possesses.
 
+![Observability Context & Trace Propagation](../diagrams/observability-correlation.svg)
+
+*(Related Decision: [ADR-0007 — OpenTelemetry Instrumentation and Context Propagation Boundary](../adr-examples/ADR-0007-opentelemetry-instrumentation-boundary.md))*
+
 ### What's Next?
 
 With comprehensive observability and production feedback in place, we can confront the reality of long-lived enterprise software: systems cannot remain static. 

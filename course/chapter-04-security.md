@@ -1451,6 +1451,10 @@ Sensitive planes remain separate.
 
 And when something is compromised, the architecture limits what that compromise can reach.
 
+![Security Architecture & Trust Boundaries](../diagrams/security-trust-boundaries.svg)
+
+*(Related Decision: [ADR-0005 — Managed Identity, Resource Scoping, and Automation Governance](../adr-examples/ADR-0005-managed-identity-and-secret-handling.md))*
+
 ### What's Next?
 
 We want security, reliability, high performance, rich flexibility, strong consistency, high availability, and rapid delivery speed. But in production systems, these qualities constantly pull in opposing directions.
