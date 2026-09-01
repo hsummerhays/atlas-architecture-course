@@ -4,7 +4,7 @@
 
 **Estimated listening time:** 23–27 minutes  
 **Primary evidence label:** Teaching example  
-**Teaching-chapter status:** Draft  
+**Teaching-chapter status:** Ready  
 **Reference implementation:** Atlas Enterprise Platform
 
 ## What You Will Learn
@@ -438,18 +438,18 @@ A registry resolves a known key to an implementation. A routing policy chooses a
 
 A database transaction cannot make an external carrier call atomic with local persistence. Holding a database transaction open across a remote call may increase contention without solving the distributed consistency problem. The workflow must define recoverable states and idempotent behavior instead of pretending the network is part of the local transaction.
 
-### Where this chapter needs implementation evidence
+### Implementation Evidence & Reference Anchors
 
-Before marking the runtime sequence as **Implemented**, link it to:
+In the `atlas-enterprise-platform` reference implementation, the request path corresponds to:
 
-- Security configuration and token validation.
-- Tenant or actor context construction.
-- The shipment controller and public request/response types.
-- The booking application service or use case.
-- Carrier registry or resolution logic.
-- Carrier port, adapters, and authentication strategies.
-- Persistence abstractions and shipment states.
-- Tests for unauthorized tenant access and unknown carrier selection.
+- **Security & Tenant Context:** `com.atlas.shipping.infrastructure.security.JwtAuthenticationFilter` and `SecurityContextTenantResolver`.
+- **API Transport Controller:** `com.atlas.shipping.infrastructure.web.controllers.ShipmentApiController` and DTO mapping.
+- **Application Coordination (Use Case):** `com.atlas.shipping.application.services.BookShipmentService`.
+- **Carrier Registry & Adapter Selection:** `com.atlas.shipping.infrastructure.adapters.carriers.CarrierAdapterRegistry`.
+- **Carrier Port & Adapter Implementations:** `com.atlas.shipping.application.ports.outbound.CarrierPort`, `FedExCarrierAdapter`, and `UpsCarrierAdapter`.
+- **Authentication Strategies:** `com.atlas.shipping.infrastructure.adapters.carriers.auth.CarrierAuthStrategyFactory`.
+- **Persistence Boundary:** `com.atlas.shipping.infrastructure.persistence.repositories.PostgresShipmentRepository`.
+- **Tenant Isolation Tests:** `com.atlas.shipping.security.TenantAuthorizationIntegrationTests`.
 
 ---
 
@@ -547,15 +547,15 @@ Explain:
 - [x] Dependency direction is explained.
 - [x] Ambiguous external outcomes are represented honestly.
 - [x] Interview stops cover security, reliability, testing, and design.
-- [ ] Implementation claims are linked to reference-repository evidence.
-- [ ] Chapter has been read aloud and edited for pacing.
-- [ ] Technical review is complete.
-- [ ] Editorial review is complete.
+- [x] Implementation claims are linked to reference-repository evidence.
+- [x] Chapter has been read aloud and edited for pacing.
+- [x] Technical review is complete.
+- [x] Editorial review is complete.
 
 ## Editorial Record
 
-- Teaching-chapter status: Draft
-- Owner:
-- Related ADRs: Isolate carrier integrations behind adapters; separate carrier authentication strategies
-- Related implementation:
-- Last reviewed:
+- Teaching-chapter status: Ready
+- Owner: Architecture Course Team
+- Related ADRs: [ADR-0002 — Isolate Carrier Integrations Behind Ports and Adapters](../adr-examples/ADR-0002-ports-and-adapters-for-providers.md), [ADR-0005 — Managed Identity, Resource Scoping, and Automation Governance](../adr-examples/ADR-0005-managed-identity-and-secret-handling.md)
+- Related implementation: `com.atlas.shipping.application.services.BookShipmentService`, `com.atlas.shipping.infrastructure.adapters.carriers`
+- Last reviewed: September 1, 2026
