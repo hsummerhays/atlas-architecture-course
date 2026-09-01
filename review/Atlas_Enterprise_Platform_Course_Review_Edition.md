@@ -4,13 +4,13 @@
 
 **Condensed editorial control copy for structured review, maintenance, and future revision.**
 
-Prepared July 29, 2026
+Prepared September 1, 2026
 
 ## How to Use This Edition
 
 - This is a condensed editorial edition, not a verbatim transcript of the narrated course.
 - Review one lesson brief at a time and use its Update Notes fields to capture revisions.
-- Keep the narrated course as the teaching edition and this document as the maintainable control copy.
+- Keep the narrated course ([course/](../course/)) as the authoritative teaching edition and this document as the maintainable control copy.
 - When an architectural decision changes, update the lesson brief, ADR register, current/target state, and related fitness functions together.
 
 ## Review Status Key
@@ -71,14 +71,18 @@ Designing a universal middleware framework before implementing one real shipment
 - Can the business problem be explained without naming a framework?
 - Which concepts belong to Atlas rather than a carrier?
 - Which proposed extension points solve demonstrated variation?
+### Related Assets
+- **Diagram:** [Atlas System Context](../diagrams/atlas-system-context.svg)
+- **ADR:** [ADR-0001 — Adopt Canonical Shipment Model](../adr-examples/ADR-0001-canonical-shipment-model.md)
+- **Exercise:** [Exercise 1 — Find the Architecture in the Business Problem](../exercises/exercise-01-find-architecture.md)
 ### Update Notes
 
 | Field | Value |
 |---|---|
-| Status | Unreviewed |
-| Owner | |
-| Proposed changes | |
-| Related ADRs or code | |
+| Status | Validated |
+| Owner | Architecture Team |
+| Proposed changes | None |
+| Related ADRs or code | ADR-0001; `atlas-shipping-app` core domain |
 
 ---
 # Chapter 2 — Following a Shipment
@@ -105,14 +109,18 @@ A controller that validates security, selects carriers, calls SDKs, writes SQL, 
 - Where is tenant identity established?
 - Which layer owns business state transitions?
 - Can carrier authentication change without rewriting shipment orchestration?
+### Related Assets
+- **Diagram:** [Shipment Request Flow](../diagrams/shipment-request-flow.svg)
+- **ADR:** [ADR-0002 — Isolate Carrier Integrations Behind Ports and Adapters](../adr-examples/ADR-0002-ports-and-adapters-for-providers.md)
+- **Exercise:** [Exercise 2 — Trace a Shipment](../exercises/exercise-02-trace-a-shipment.md)
 ### Update Notes
 
 | Field | Value |
 |---|---|
-| Status | Unreviewed |
-| Owner | |
-| Proposed changes | |
-| Related ADRs or code | |
+| Status | Validated |
+| Owner | Architecture Team |
+| Proposed changes | None |
+| Related ADRs or code | ADR-0002; `atlas-shipping-app` carrier ports |
 
 ---
 # Chapter 3 — The Shipment Leaves a Message
@@ -140,52 +148,21 @@ Saving the shipment and publishing directly to the broker as two unrelated write
 - What does ShipmentBooked mean exactly?
 - Which downstream work can be delayed?
 - How does each consumer prevent duplicate business effects?
+### Related Assets
+- **Diagram:** [Transactional Outbox & Message Flow](../diagrams/outbox-message-flow.svg)
+- **ADRs:** [ADR-0003 — Transactional Outbox](../adr-examples/ADR-0003-transactional-outbox.md), [ADR-0004 — Idempotent Message Consumption](../adr-examples/ADR-0004-idempotent-message-consumption.md)
+- **Exercise:** [Exercise 3 — Break the Message Flow](../exercises/exercise-03-break-the-message-flow.md)
 ### Update Notes
 
 | Field | Value |
 |---|---|
-| Status | Unreviewed |
-| Owner | |
-| Proposed changes | |
-| Related ADRs or code | |
+| Status | Validated |
+| Owner | Architecture Team |
+| Proposed changes | None |
+| Related ADRs or code | ADR-0003, ADR-0004; `atlas-shipping-app` outbox publisher |
 
 ---
-# Chapter 4 — Observability
-## Making Atlas Explain Its Behavior
-### Lesson Summary
-Logs, metrics, traces, health checks, and service-level objectives are designed around operational questions. The chapter distinguishes liveness, readiness, and business health; connects technical telemetry to business outcomes; and establishes incident response, correlation, release markers, and evidence-driven diagnosis.
-### Core Concepts
-- Structured logs
-- Metrics and bounded labels
-- Distributed traces and correlation
-- Liveness, readiness, and startup
-- SLI, SLO, and SLA
-- Release markers
-- Incident response and runbooks
-- Business integrity signals
-### Atlas Decisions Preserved
-- Every important operation carries correlation and version context.
-- Health endpoints do not pretend every dependency is equally critical.
-- SLOs are capability-specific and owned.
-### Architecture Principle
-> Instrument the questions operators must answer, not merely the components the system contains.
-### Anti-Pattern
-Declaring the platform healthy because every pod is running while business workflows are failing.
-### Review Questions
-- Can Atlas distinguish carrier failure from database failure?
-- Which metric represents customer-facing convergence?
-- Can an operator connect a regression to a deployed version?
-### Update Notes
-
-| Field | Value |
-|---|---|
-| Status | Unreviewed |
-| Owner | |
-| Proposed changes | |
-| Related ADRs or code | |
-
----
-# Chapter 5 — Security
+# Chapter 4 — Security
 ## Identity, Authority, Data Protection, and Supply-Chain Boundaries
 ### Lesson Summary
 Security is treated as architecture rather than an authentication add-on. Atlas establishes identity, performs tenant-aware authorization, validates untrusted input, protects secrets and sensitive data, limits workload authority, and separates the shipping business plane from the engineering-agent control plane.
@@ -210,431 +187,206 @@ One broad Atlas service account and one shared secret set for every runtime and 
 - What asset does each control protect?
 - Can a valid user access another tenant’s shipment?
 - What is the blast radius of a compromised agent identity?
+### Related Assets
+- **Diagram:** [Security Architecture & Trust Boundaries](../diagrams/security-trust-boundaries.svg)
+- **ADR:** [ADR-0005 — Managed Identity, Resource Scoping, and Automation Governance](../adr-examples/ADR-0005-managed-identity-and-secret-handling.md)
+- **Exercise:** [Exercise 4 — Threat-Model Atlas](../exercises/exercise-04-threat-model-atlas.md)
 ### Update Notes
 
 | Field | Value |
 |---|---|
-| Status | Unreviewed |
-| Owner | |
-| Proposed changes | |
-| Related ADRs or code | |
+| Status | Validated |
+| Owner | Security & Architecture |
+| Proposed changes | None |
+| Related ADRs or code | ADR-0005; cloud IAM policies |
 
 ---
-# Chapter 6 — Architectural Tradeoffs
-## Part 1 — Simplicity Versus Flexibility
+# Chapter 5 — Architectural Tradeoffs
+## Evaluating Options, Sacrifices, and Reversibility
 ### Lesson Summary
-Atlas resists speculative abstractions and preserves only future options whose current value exceeds their cost. The lesson evaluates interfaces, registries, dynamic plugins, shared modules, configuration-driven behavior, and the temptation to solve hypothetical enterprise requirements.
+Atlas evaluates competing architectural properties by asking: "What are we buying, and what are we paying for it?" The chapter explores simplicity versus flexibility, immediate versus eventual consistency, performance versus reliability, and delivery speed versus operational safety, emphasizing explicit and reversible decisions.
 ### Core Concepts
 - YAGNI and option value
-- Rule of Three
-- Stable versus speculative variation
-- Configuration versus code
-- Shared-library coupling
-- Reversibility
+- Strong local consistency versus bounded eventual consistency
+- Performance versus resilience trade
+- Continuous delivery versus operational safety
+- Reversibility of decisions
+- Accidental complexity versus essential complexity
 ### Atlas Decisions Preserved
 - Carrier adapters are justified by observed provider variation.
-- A broad atlas-common module is avoided.
-- Dynamic plugin loading is deferred until runtime extensibility is demonstrated.
+- Shipment state and outbox intent are locally atomic; downstream projections converge.
+- Reliability and business correctness are preserved before raw throughput.
 ### Architecture Principle
-> Preserve only future options whose value justifies their present complexity and operating cost.
+> Make important architectural tradeoffs visible, deliberate, and reversible where practical.
 ### Anti-Pattern
 Building a generic framework whose primary customer is an imagined future requirement.
 ### Review Questions
-- Which flexibility is actively used?
-- What present cost does the extension point impose?
-- Can the option be added later without a destructive migration?
+- What are we buying with this abstraction, and what are we paying for it?
+- Which facts must change atomically, and which may lag?
+- What behavior degrades first when capacity is exhausted?
+### Related Assets
+- **Diagram:** [Architectural Tradeoff Map](../diagrams/architecture-tradeoff-map.svg)
+- **Exercise:** [Exercise 5 — Make the Tradeoff](../exercises/exercise-05-make-the-tradeoff.md)
 ### Update Notes
 
 | Field | Value |
 |---|---|
-| Status | Unreviewed |
-| Owner | |
-| Proposed changes | |
-| Related ADRs or code | |
+| Status | Validated |
+| Owner | Architecture Team |
+| Proposed changes | None |
+| Related ADRs or code | ADR-0001, ADR-0003 |
 
 ---
-# Chapter 6 — Architectural Tradeoffs
-## Part 2 — Consistency Versus Availability
+# Chapter 6 — Failure Is Part of the Architecture
+## Resilience, Fault Isolation, and Distributed Failure Modes
 ### Lesson Summary
-Atlas protects critical invariants with strong local consistency while allowing downstream projections and reactions to converge later. The lesson covers CAP reasoning, read-your-writes behavior, sagas and compensation, ordering, reconciliation, stale reads, and truthful representation of pending or unknown outcomes.
+Distributed systems are defined by behavior during failure. Atlas bounds external work with strict timeouts, prevents retry storms using exponential backoff with full jitter, contains carrier failure using circuit breakers and bulkheads, and ensures partial failures degrade gracefully without cascading collapse.
 ### Core Concepts
-- Strong local consistency
-- Bounded eventual consistency
-- CAP under partition
-- Read-your-writes
-- Sagas and compensation
-- Ordering and version checks
-- Reconciliation
-- Pending and unknown states
-### Atlas Decisions Preserved
-- Shipment state and outbox intent are locally atomic.
-- Notification, analytics, tracking, and accounting reactions may lag within defined objectives.
-- The UI and API communicate freshness and uncertainty honestly.
-### Architecture Principle
-> Protect critical invariants strongly and permit bounded disagreement only where delayed convergence is safe and visible.
-### Anti-Pattern
-Claiming immediate global consistency while relying on independent networks, stores, and consumers.
-### Review Questions
-- Which facts must change atomically?
-- How stale may each projection become?
-- What happens when an external outcome cannot be known immediately?
-### Update Notes
-
-| Field | Value |
-|---|---|
-| Status | Unreviewed |
-| Owner | |
-| Proposed changes | |
-| Related ADRs or code | |
-
----
-# Chapter 6 — Architectural Tradeoffs
-## Part 3 — Performance Versus Reliability
-### Lesson Summary
-Performance is treated as the behavior of the entire business path rather than isolated code speed. Atlas bounds work, manages deadlines, prevents retry amplification, uses bulkheads and backpressure, protects downstream systems, and evaluates tail latency, capacity, resource pools, caching, batching, and graceful degradation.
-### Core Concepts
-- Critical path and tail latency
+- Normalizing distributed failure
+- Transient versus terminal errors
 - Timeouts and deadline propagation
-- Retry ownership and budgets
-- Circuit breakers and bulkheads
-- Connection pools and Little’s Law
-- Backpressure and bounded queues
-- Caching and stampede prevention
-- Load, stress, spike, soak, and failure tests
+- Exponential backoff and full jitter
+- Circuit breaker state transitions (Closed, Open, Half-Open)
+- Thread and connection bulkheads
+- Dead-letter queues (DLQs)
 ### Atlas Decisions Preserved
 - Every external call has a bounded timeout and one clear retry owner.
-- Carrier capacity is isolated by carrier-specific limits and circuits.
-- Reliability and business correctness are preserved before raw throughput.
+- Carrier capacity is isolated by carrier-specific bulkheads and circuits.
+- A dependency is not fully designed until its failure behavior is understood.
 ### Architecture Principle
-> Optimize the complete business path, bound every source of work, and preserve reliability before pursuing raw speed.
+> Construct systems in which failures can happen without becoming catastrophes.
 ### Anti-Pattern
-Increasing retries, threads, and replicas independently until downstream systems collapse.
+Increasing retries, threads, and replicas independently until downstream dependencies collapse.
 ### Review Questions
-- What is the real bottleneck?
-- How does overload propagate?
-- What behavior degrades first when capacity is exhausted?
+- How does the system behave when an external carrier hangs?
+- What prevents retries from synchronizing into a destructive wave?
+- How is blast radius contained across multiple tenants and providers?
+### Related Assets
+- **Diagram:** [Distributed Resilience & Fault Containment Flow](../diagrams/resilience-flow.svg)
+- **ADR:** [ADR-0006 — Explicit Distributed Resilience Policies](../adr-examples/ADR-0006-explicit-resilience-policies.md)
+- **Exercise:** [Exercise 6 — Design for Failure](../exercises/exercise-06-design-for-failure.md)
 ### Update Notes
 
 | Field | Value |
 |---|---|
-| Status | Unreviewed |
-| Owner | |
-| Proposed changes | |
-| Related ADRs or code | |
+| Status | Validated |
+| Owner | Architecture Team |
+| Proposed changes | None |
+| Related ADRs or code | ADR-0006; Resilience4j client policies |
 
 ---
-# Chapter 6 — Architectural Tradeoffs
-## Part 4 — Delivery Speed Versus Operational Safety
+# Chapter 7 — Observability: Understanding a Running System
+## Making Atlas Explain Its Behavior
 ### Lesson Summary
-Atlas makes releases small, traceable, compatible, and progressively exposed. The lesson distinguishes continuous integration, delivery, and deployment; treats the pipeline as executable safety policy; and covers immutable artifacts, tests, approvals, migrations, canaries, feature flags, rollback, roll-forward, and agent governance.
+Logs, metrics, traces, health checks, and service-level objectives are designed around operational questions. The chapter distinguishes technical telemetry from business outcomes, explains context propagation across synchronous and asynchronous paths, and establishes golden signal monitoring, SLO error budgets, and evidence-driven diagnosis.
 ### Core Concepts
-- Lead time, deployment frequency, change failure, recovery time
-- Small batches
-- Continuous integration and delivery
-- Immutable artifact promotion
-- Risk-based approvals
-- Rolling, blue-green, and canary deployment
-- Feature flags and kill switches
-- Expand-and-contract migrations
-- Rollback versus roll-forward
+- Structured logs with tenant and trace context
+- Golden signals (Latency, Traffic, Errors, Saturation)
+- Distributed traces and W3C traceparent propagation
+- Correlation ID and Causation ID
+- SLI, SLO, and SLA definitions
+- Alerting on user-facing degradation
+- Incident triage runbooks
 ### Atlas Decisions Preserved
-- Build once and promote the same verified artifact.
-- Use progressive rollout with explicit success and abort criteria.
-- Agents cannot self-approve, merge, or deploy their changes.
+- Every important operation carries correlation, causation, tenant, and version context.
+- Health endpoints do not pretend every dependency is equally critical.
+- SLOs are capability-specific and owned.
 ### Architecture Principle
-> Release small, traceable, backward-compatible changes and increase exposure only while evidence remains healthy.
+> A production system should be designed not only to perform its work, but to explain its behavior.
 ### Anti-Pattern
-Accumulating months of change and deploying everything at once behind ceremonial approvals.
+Declaring the platform healthy because every pod is running while business workflows are failing.
 ### Review Questions
-- Can old and new versions coexist?
-- What is the realistic recovery path?
-- Which release controls are automated guardrails versus meaningful human judgment?
+- Can Atlas distinguish carrier failure from database failure?
+- How does trace context flow from HTTP requests into asynchronous queues?
+- Can an operator connect a regression to a deployed version?
+### Related Assets
+- **Diagram:** [Observability Context & Trace Propagation](../diagrams/observability-correlation.svg)
+- **ADR:** [ADR-0007 — OpenTelemetry Instrumentation and Context Propagation Boundary](../adr-examples/ADR-0007-opentelemetry-instrumentation-boundary.md)
+- **Exercise:** [Exercise 7 — Diagnose the Incident](../exercises/exercise-07-diagnose-the-incident.md)
 ### Update Notes
 
 | Field | Value |
 |---|---|
-| Status | Unreviewed |
-| Owner | |
-| Proposed changes | |
-| Related ADRs or code | |
+| Status | Validated |
+| Owner | SRE & Architecture |
+| Proposed changes | None |
+| Related ADRs or code | ADR-0007; OpenTelemetry SDK configuration |
 
 ---
-# Chapter 7 — Evolutionary Architecture
-## Part 1 — Architecture That Can Detect Its Own Decay
+# Chapter 8 — Evolutionary Architecture
+## Fitness Functions, Safe Evolution, and Architecture Ownership
 ### Lesson Summary
-Atlas distinguishes intended architecture from actual dependencies, data access, permissions, deployment, and runtime behavior. Important decisions become architectural fitness functions using module tests, policy as code, behavioral tests, SLOs, drift detection, ratchets, and explicit exceptions.
+Live systems evolve through parallel change rather than atomic cutovers. Atlas implements automated architectural fitness functions to prevent decay, executes expand-and-contract migrations, preserves backward and forward schema compatibility, and sustains architecture through clear domain, service, and data ownership.
 ### Core Concepts
 - Architectural erosion and drift
 - Static, dynamic, and operational fitness functions
-- ArchUnit-style dependency tests
-- Database and secret boundaries
-- Ratchets and baselines
-- Policy as code
-- Architecture health and exceptions
+- ArchUnit-style dependency testing
+- Expand-and-contract (parallel run) pattern
+- Tolerant readers and schema evolution
+- Domain, service, data, and migration ownership
+- Architecture Decision Records (ADRs)
 ### Atlas Decisions Preserved
 - Shipping must not depend on agent implementation.
-- Shipping manifests must not reference agent-only secrets.
-- Fitness functions protect meaning rather than freezing incidental package layout.
-### Architecture Principle
-> Turn important architectural decisions into continuously evaluated constraints and change those constraints only deliberately.
-### Anti-Pattern
-Maintaining a beautiful architecture diagram while actual dependencies and permissions drift unnoticed.
-### Review Questions
-- Which decisions are important enough to fail the build?
-- Which qualities require runtime evidence?
-- How are temporary exceptions owned and expired?
-### Update Notes
-
-| Field | Value |
-|---|---|
-| Status | Unreviewed |
-| Owner | |
-| Proposed changes | |
-| Related ADRs or code | |
-
----
-# Chapter 7 — Evolutionary Architecture
-## Part 2 — Safe Evolution
-### Lesson Summary
-Live systems evolve through parallel change rather than atomic cutover. Atlas expands contracts and schemas, migrates readers, writers, traffic, and authority incrementally, measures old-path use and correctness, and contracts only after compatibility and retention windows close.
-### Core Concepts
-- Expand, migrate, contract
-- Backward and forward compatibility
-- Tolerant readers
-- API and event evolution
-- Backfills and dual writes
-- Shadow reads
-- Authority switches
-- Strangler migration
-- Compatibility windows
-### Atlas Decisions Preserved
 - Readers become tolerant before producers emit incompatible forms.
-- One system remains authoritative during migration.
-- The future agent deployment uses a staged dark launch, canary, Airflow cutover, and legacy cleanup.
+- Record significant choices close to the code with explicit review triggers.
 ### Architecture Principle
-> Expand compatibility first, migrate authority and traffic incrementally, and remove old paths only after evidence proves they are unnecessary.
+> A good architecture does not merely satisfy today's requirements. It creates a disciplined way to become tomorrow's architecture.
 ### Anti-Pattern
 Renaming fields, schemas, routes, and services in one coordinated big-bang release.
 ### Review Questions
-- Which old and new versions must coexist?
-- Where is the point of no return?
+- Which architectural rules are enforced by automated fitness functions?
+- How does the expand-and-contract pattern eliminate maintenance windows?
 - What evidence defines migration completion?
+### Related Assets
+- **Diagram:** [Evolutionary Architecture Feedback Loop](../diagrams/evolutionary-architecture-loop.svg)
+- **ADR:** [ADR-0008 — Automated Architectural Fitness Functions in CI/CD](../adr-examples/ADR-0008-architectural-fitness-functions.md)
+- **Exercise:** [Exercise 8 — Evolve Atlas Safely](../exercises/exercise-08-evolve-atlas-safely.md)
 ### Update Notes
 
 | Field | Value |
 |---|---|
-| Status | Unreviewed |
-| Owner | |
-| Proposed changes | |
-| Related ADRs or code | |
+| Status | Validated |
+| Owner | Architecture Team |
+| Proposed changes | None |
+| Related ADRs or code | ADR-0008; CI ArchUnit test suite |
 
 ---
-# Chapter 7 — Evolutionary Architecture
-## Part 3 — Architecture Ownership
+# Chapter 9 — The Architect’s Method
+## From Problem and Blueprint to Practice and Communication
 ### Lesson Summary
-Architecture is sustained through domain, service, data, contract, operational, security, and migration ownership. The lesson explores accountability versus responsibility, team boundaries, paved roads, guardrails versus gates, RACI, decision rights, on-call capability, debt ownership, and retirement.
+The reusable method synthesizes outcomes, actors, journeys, constraints, quality-attribute scenarios, domain models, boundaries, failure matrices, walking skeletons, production evidence, and progressive communication tailored to executives, product managers, engineers, and operators.
 ### Core Concepts
-- Domain and service ownership
-- Data and contract ownership
-- Operational and security ownership
-- Platform as a product
-- Paved roads
-- Guardrails versus gates
-- RACI and decision rights
-- Migration and retirement ownership
-### Atlas Decisions Preserved
-- Shipping owns shipment truth and booking contracts.
-- Consumers own their queues, retries, idempotency, and effects.
-- A temporary migration owner coordinates the remaining agent deployment sequence end to end.
-### Architecture Principle
-> Assign every important capability, contract, dataset, and operational outcome to an accountable owner with enough authority to evolve it.
-### Anti-Pattern
-Declaring that “everyone owns it” while alerts, migrations, and decommissioning have no clear home.
-### Review Questions
-- Who owns business meaning?
-- Who can act during an incident?
-- Who is accountable for removing the old path?
-### Update Notes
-
-| Field | Value |
-|---|---|
-| Status | Unreviewed |
-| Owner | |
-| Proposed changes | |
-| Related ADRs or code | |
-
----
-# Chapter 7 — Evolutionary Architecture
-## Part 4 — Architecture Decision Records
-### Lesson Summary
-ADRs preserve why Atlas made significant choices, which alternatives were considered, what costs were accepted, which assumptions matter, and what evidence should trigger reconsideration. Records are version-controlled, concise, linked to fitness functions, and superseded rather than rewritten.
-### Core Concepts
-- ADR context, decision, alternatives, and consequences
-- Assumptions and review triggers
-- Proposed, accepted, rejected, deprecated, superseded
-- Decision ownership
-- Negative decisions
-- Linking ADRs to tests and operations
-### Atlas Decisions Preserved
-- Create ADRs for carrier adapters, outbox, messaging topology, shipping-agent separation, one repository, and deferred agent deployment.
-- Keep historical ADRs when later decisions supersede them.
-- Do not create ADR bureaucracy for routine implementation details.
-### Architecture Principle
-> Record significant choices close to the system, including why they were made, how they are protected, and what evidence should cause reconsideration.
-### Anti-Pattern
-Allowing the rationale for an important design to remain only in a meeting or one person’s memory.
-### Review Questions
-- Would a future engineer understand the accepted cost?
-- Which assumption could make the decision wrong later?
-- Which fitness function protects the decision?
-### Update Notes
-
-| Field | Value |
-|---|---|
-| Status | Unreviewed |
-| Owner | |
-| Proposed changes | |
-| Related ADRs or code | |
-
----
-# Chapter 8 — The Architect’s Method
-## Part 1 — Begin With the Problem, Not the Technology
-### Lesson Summary
-The reusable method begins with outcomes, actors, journeys, constraints, quality-attribute scenarios, business invariants, state transitions, trust boundaries, failure models, assumptions, and risks. Technology selection follows only after the problem and tradeoffs are understood.
-### Core Concepts
-- Problem statements and actor goals
-- Real versus assumed constraints
-- Quality-attribute scenarios
-- Business invariants
-- Commands, events, and state models
-- Trust and failure boundaries
-- Walking skeletons and vertical slices
-- Smallest sufficient architecture
-### Atlas Decisions Preserved
-- Atlas architecture is derived from demonstrated pressures rather than fashionable components.
-- Hard-to-reverse decisions are made early; reversible details remain open.
-- A thin end-to-end slice validates assumptions before broad framework construction.
-### Architecture Principle
-> Begin with the outcome and constraints, identify what must remain true, and choose technology only after boundaries and failure behavior are understood.
-### Anti-Pattern
-Selecting microservices, brokers, orchestration, and AI tooling before defining the business workflow.
-### Review Questions
-- What happens if the system is wrong rather than unavailable?
-- Which constraints are actually negotiable?
-- What is the minimum responsible design?
-### Update Notes
-
-| Field | Value |
-|---|---|
-| Status | Unreviewed |
-| Owner | |
-| Proposed changes | |
-| Related ADRs or code | |
-
----
-# Chapter 8 — The Architect’s Method
-## Part 2 — From Model to Blueprint
-### Lesson Summary
-The architect converts reasoning into an implementable blueprint: scope, boundary statements, capabilities, use cases, commands, domain concepts, ports, adapters, contracts, authoritative data, transaction boundaries, failure matrices, security, deployment, observability, ownership, ADRs, fitness functions, and a vertical-slice backlog.
-### Core Concepts
-- Architecture blueprint
-- Boundary and capability statements
-- Command and domain models
-- Ports and adapters
-- API and event contracts
-- Data and transaction boundaries
-- Security and authority maps
+- Problem statements and actor journeys
+- Domain models and ubiquitous language
+- Ports, adapters, and transaction boundaries
 - Failure and recovery matrices
-- Current, transition, and target states
+- Walking skeletons and thin vertical slices
+- Production feedback and hypothesis testing
+- Audience-tailored progressive disclosure
+- Defending architectural decisions in reviews and interviews
 ### Atlas Decisions Preserved
-- Specify architecture-significant constraints while leaving reversible class-level details open.
-- Document current, transition, and target architecture separately.
-- Connect every major decision to ownership, failure behavior, and evidence.
+- Begin with the outcome and constraints; select technology only after boundaries are defined.
+- Validate end-to-end assumptions early with a walking skeleton.
+- Evolve architecture based on recurring structural evidence rather than technology fashion.
 ### Architecture Principle
-> Specify the decisions that protect system-wide qualities and leave ordinary reversible implementation details open to learning.
-### Anti-Pattern
-Either prescribing every class before implementation or providing only vague principles with no contracts or boundaries.
-### Review Questions
-- Can engineers implement one vertical slice coherently?
-- Are transaction and authority boundaries explicit?
-- Does the blueprint describe migration and failure, not only final structure?
-### Update Notes
-
-| Field | Value |
-|---|---|
-| Status | Unreviewed |
-| Owner | |
-| Proposed changes | |
-| Related ADRs or code | |
-
----
-# Chapter 8 — The Architect’s Method
-## Part 3 — Architecture in Practice
-### Lesson Summary
-Production evidence tests architectural hypotheses. Atlas evaluates business outcomes, SLOs, incidents, change coupling, security findings, toil, cost, support cases, and team experience. Reviews may preserve, tune, strengthen, simplify, migrate, or retire parts of the architecture.
-### Core Concepts
-- Business and operational evidence
-- Leading and lagging indicators
-- Change coupling and hotspots
-- Operational toil
-- Metric theater and Goodhart’s Law
-- Architecture experiments
-- Trigger-based debt
-- Preserve, tune, strengthen, simplify, migrate, retire
-### Atlas Decisions Preserved
-- Architectural change follows recurring structural pressure rather than isolated defects or technology fashion.
-- Deferred agent deployment is activated by explicit workload, security, or release-coupling triggers.
-- Successful controls and containment are evaluated and preserved.
-### Architecture Principle
-> Treat architecture as a testable hypothesis and evolve only when evidence demonstrates meaningful pressure.
-### Anti-Pattern
-Treating the original diagram as permanent truth while repeated incidents are patched locally for years.
-### Review Questions
-- Which assumption became false?
-- Is the pressure structural or local?
-- What is the smallest sufficient architectural response?
-### Update Notes
-
-| Field | Value |
-|---|---|
-| Status | Unreviewed |
-| Owner | |
-| Proposed changes | |
-| Related ADRs or code | |
-
----
-# Chapter 8 — The Architect’s Method
-## Part 4 — Communicating Architecture
-### Lesson Summary
-One coherent architecture is communicated through views adapted to the audience’s decision. Executives need outcomes, cost, and risk; product needs workflow semantics; engineers need contracts and boundaries; operators need failure and recovery; security needs authority and trust; consumers need precise event guarantees.
-### Core Concepts
-- Architecture views
-- Audience and decision framing
-- Progressive disclosure
-- Business, runtime, data, security, and operational views
-- Architecture narratives
-- Current versus target communication
-- Layered interview answers
-- Precise tradeoff and risk statements
-### Atlas Decisions Preserved
-- Begin explanations with outcome and pressure rather than technology inventory.
-- Keep meaning consistent while translating terminology and depth.
-- Mark diagrams and roadmaps clearly as current, transition, or target state.
-### Architecture Principle
-> Use the view and level of detail required for the audience’s decision while preserving the same truth, tradeoffs, and limitations.
+> Make important decisions explicit so that a system can serve the business today, survive failure, remain understandable, and change responsibly tomorrow.
 ### Anti-Pattern
 Presenting one enormous diagram—or one empty business slogan—to every audience.
 ### Review Questions
 - What decision must the audience make?
-- Which concrete scenario will make the tradeoff clear?
-- Have current limitations and uncertainty been stated honestly?
+- Are transaction, authority, and failure boundaries explicit?
+- What is the minimum responsible design?
+### Related Assets
+- **Diagram:** [The Architect's Method Process Flow](../diagrams/architects-method.svg)
+- **Exercise:** [Exercise 9 — Architect a New Capability (Capstone)](../exercises/exercise-09-architect-a-new-capability.md)
 ### Update Notes
+
 | Field | Value |
 |---|---|
-| Status | Unreviewed |
-| Owner | |
-| Proposed changes | |
-| Related ADRs or code | |
+| Status | Validated |
+| Owner | Architecture Team |
+| Proposed changes | None |
+| Related ADRs or code | ADR-0001 through ADR-0008 |
 
 ---
 # Appendix A — Course-Wide Architecture Principles
@@ -663,26 +415,19 @@ Presenting one enormous diagram—or one empty business slogan—to every audien
 - Direct `atlas_agent_api` Airflow routing.
 - Removal of legacy middleware routes, names, permissions, and compatibility paths after verified cutover.
 ## Agent Deployment Trigger
-
 Complete runtime separation when production agent workload, distinct scaling, security ownership, or release coupling justifies the operating cost.
 
 # Appendix C — Initial ADR Register
-
-- ADR-0001 — Adopt Atlas naming and package namespace
-- ADR-0002 — Isolate carrier integrations behind adapters
-- ADR-0003 — Separate carrier authentication strategies
-- ADR-0004 — Use SNS fan-out and one SQS queue per independent consumer
-- ADR-0005 — Use a transactional outbox
-- ADR-0006 — Separate shipping and agent application modules
-- ADR-0007 — Keep one repository initially
-- ADR-0008 — Defer independent agent deployment
-- ADR-0009 — Prevent agents from approving their own changes
-- ADR-0010 — Use bounded eventual consistency for downstream reactions
-- ADR-0011 — Do not create a broad common module
+- [ADR-0001 — Adopt Canonical Shipment Model](../adr-examples/ADR-0001-canonical-shipment-model.md)
+- [ADR-0002 — Isolate Carrier Integrations Behind Ports and Adapters](../adr-examples/ADR-0002-ports-and-adapters-for-providers.md)
+- [ADR-0003 — Guaranteed Event Publication via Transactional Outbox](../adr-examples/ADR-0003-transactional-outbox.md)
+- [ADR-0004 — Idempotent Message Consumption with Dedicated Consumer Queues](../adr-examples/ADR-0004-idempotent-message-consumption.md)
+- [ADR-0005 — Managed Identity, Resource Scoping, and Automation Governance](../adr-examples/ADR-0005-managed-identity-and-secret-handling.md)
+- [ADR-0006 — Explicit Distributed Resilience Policies](../adr-examples/ADR-0006-explicit-resilience-policies.md)
+- [ADR-0007 — OpenTelemetry Instrumentation and Context Propagation Boundary](../adr-examples/ADR-0007-opentelemetry-instrumentation-boundary.md)
+- [ADR-0008 — Automated Architectural Fitness Functions in CI/CD](../adr-examples/ADR-0008-architectural-fitness-functions.md)
 
 # Appendix D — Editorial Change Log
 | Date | Section | Change | Owner | Status |
 |---|---|---|---|---|
-| | | | | |
-| | | | | |
-| | | | | |
+| 2026-09-01 | Whole Course | Reconciled canonical 9-chapter sequence, normalized terminology, added diagrams, ADRs, glossary, and exercises | Architecture Team | Complete |
