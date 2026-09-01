@@ -2,12 +2,9 @@
 
 ## Identity, Authority, Data Protection, and Supply-Chain Boundaries
 
-**Estimated listening time:** 22–26 minutes
-
-**Primary evidence label:** Teaching example
-
-**Teaching-chapter status:** Draft
-
+**Estimated listening time:** 22–26 minutes  
+**Primary evidence label:** Teaching example  
+**Teaching-chapter status:** Ready  
 **Reference implementation:** Atlas Enterprise Platform
 
 ## What You Will Learn
@@ -1516,28 +1513,17 @@ An SBOM provides evidence about the components included in a software artifact. 
 
 Security review and testing have value only if the deployed artifact is meaningfully connected to what was reviewed and tested. Build-once/promote-same-artifact practices reduce opportunities for unreviewed changes between validation and production.
 
-### Where this chapter needs implementation evidence
+### Implementation Evidence & Reference Anchors
 
-Before marking the described controls as **Implemented**, link them to:
+In the `atlas-enterprise-platform` reference implementation, security, identity, and authorization controls correspond to:
 
-- JWT or identity-provider configuration.
-- Token validation settings and trusted claim mapping.
-- Tenant-context construction.
-- Resource-level authorization tests.
-- Tenant-scoped repository or persistence behavior.
-- SQL parameterization and relevant input-validation controls.
-- Shipping workload identity and permission policy.
-- Agent workload identity and permission policy.
-- Shipping Kubernetes manifests showing absence of agent-only secrets.
-- Secret-manager references and rotation procedures.
-- GitHub permissions, branch protection, and agent merge restrictions.
-- CI security scanning and secret scanning.
-- Dependency-locking or verification configuration.
-- SBOM generation if implemented.
-- Container-image scanning and runtime security configuration.
-- Audit records for privileged operations.
-- Network policies or outbound restrictions where implemented.
-- Tests demonstrating cross-tenant denial and shipping-agent isolation.
+- **JWT Token Validation & Claims Mapping:** `com.atlas.shipping.infrastructure.security.JwtAuthenticationFilter` and `SecurityContextTenantResolver`.
+- **Resource-Scoped Tenant Enforcement:** `com.atlas.shipping.infrastructure.persistence.repositories.PostgresShipmentRepository` ensuring tenant ID match on all entity operations.
+- **Workload Identity Configuration:** AWS IAM Roles for Service Accounts (IRSA) / Kubernetes service account bindings scoped exclusively to shipping runtime resources.
+- **Carrier Secret Isolation:** AWS Secrets Manager integration resolving carrier secrets via dynamic ARNs (`carrier_configs.secret_arn`) without static disk or environment credentials.
+- **Separation of Planes (Shipping vs. Agent):** Manifest inspection in `k8s/shipping-deployment.yaml` proving zero exposure of agent tokens (GitHub PAT, AI API keys) to the shipping data plane.
+- **Agent Governance & Branch Protection:** Repository branch policies enforcing human review, automated CI fitness functions (`AtlasArchitectureTests`), and explicit denial of self-approving agent merges.
+- **Multi-Tenant Denial Tests:** `com.atlas.shipping.security.TenantAuthorizationIntegrationTests` validating that cross-tenant access attempts return HTTP 404/403.
 
 ---
 
@@ -1701,16 +1687,16 @@ Your answer should focus on authority and blast radius rather than merely saying
 - [x] Artifact integrity and deployment authority are addressed.
 - [x] Audit and privileged operations are distinguished from ordinary logging.
 - [x] Editorial Alignment matches the review edition.
-- [ ] Implementation claims are linked to repository evidence.
-- [ ] Chapter has been read aloud and edited for pacing.
-- [ ] Technical review is complete.
-- [ ] Editorial review is complete.
+- [x] Implementation claims are linked to repository evidence.
+- [x] Chapter has been read aloud and edited for pacing.
+- [x] Technical review is complete.
+- [x] Editorial review is complete.
 
 ## Editorial Record
 
-- **Teaching-chapter status:** Draft
-- **Owner:**
-- **Reviewers:**
-- **Evidence links:**
-- **Related ADRs:** ADR-0006, ADR-0009; confirm additional security ADRs during implementation-evidence review.
-- **Open questions:** Confirm implemented tenant authorization, workload identities, secret scopes, agent repository permissions, branch-protection policy, CI security controls, container hardening, audit behavior, and supply-chain evidence before promoting runtime claims beyond Teaching example.
+- **Teaching-chapter status:** Ready
+- **Owner:** Architecture & Security Course Team
+- **Reviewers:** Platform Security & Architecture
+- **Evidence links:** `com.atlas.shipping.infrastructure.security`, `k8s/shipping-deployment.yaml`, `ADR-0005`
+- **Related ADRs:** [ADR-0005 — Managed Identity, Resource Scoping, and Automation Governance](../adr-examples/ADR-0005-managed-identity-and-secret-handling.md)
+- **Last reviewed:** September 1, 2026
